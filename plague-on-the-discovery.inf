@@ -1,0 +1,3302 @@
+!% -~S
+!% $OMIT_UNUSED_ROUTINES=1
+!% $ZCODE_COMPACT_GLOBALS=1
+!% $ZCODE_LESS_DICT_DATA=1
+!% $ZCODE_MAX_INLINE_STRING=9999
+!% $MAX_ABBREVS=96
+!========================================
+! Plague on the Discovery
+! Morgan Tyler series #3 of 5
+! Copyright © 2026 Gianluca Girelli
+!========================================
+!Constant DEBUG;
+
+Abbreviate ". ";
+Abbreviate ", ";
+Abbreviate " the ";
+Abbreviate "You";
+Abbreviate "Discovery";
+Abbreviate "The";
+Abbreviate "It's";
+Abbreviate "ing";
+Abbreviate "tion";
+Abbreviate "and";
+Abbreviate "'d better";
+Abbreviate "already";
+Abbreviate "It looks like";
+Abbreviate "have";
+Abbreviate "flamethrower";
+Abbreviate "curity droids";
+Abbreviate " th";
+Abbreviate " co";
+Abbreviate " you";
+Abbreviate "d to";
+Abbreviate "ere";
+Abbreviate " can";
+Abbreviate "'s no";
+Abbreviate " lo";
+Abbreviate " in";
+Abbreviate " with";
+Abbreviate " room";
+Abbreviate " sh";
+Abbreviate " of";
+Abbreviate " pr";
+Abbreviate " mo";
+Abbreviate " on";
+Abbreviate " it";
+Abbreviate " don't";
+Abbreviate "currently";
+Abbreviate " any";
+Abbreviate " st";
+Abbreviate " wa";
+Abbreviate "This";
+Abbreviate " is";
+Abbreviate "very";
+Abbreviate " from";
+Abbreviate " pa";
+Abbreviate " someth";
+Abbreviate "**]";
+Abbreviate " li";
+Abbreviate " for";
+Abbreviate "detonator";
+Abbreviate " destroy";
+Abbreviate " ex";
+Abbreviate "Earth";
+Abbreviate "droids";
+Abbreviate " la";
+Abbreviate " ha";
+Abbreviate "d b";
+Abbreviate " emergency";
+Abbreviate " sp";
+Abbreviate " door";
+Abbreviate " to";
+Abbreviate "the";
+Abbreviate " some";
+Abbreviate "rea";
+Abbreviate "you";
+Abbreviate " an";
+Abbreviate " do";
+Abbreviate "los";
+Abbreviate " ca";
+Abbreviate "ind";
+Abbreviate " no";
+Abbreviate "res";
+Abbreviate "room";
+Abbreviate "'t se";
+Abbreviate " ne";
+Abbreviate "lock";
+Abbreviate "igh";
+Abbreviate " be";
+Abbreviate " me";
+Abbreviate "con";
+Abbreviate "gen";
+Abbreviate "'ve";
+Abbreviate " bomb";
+Abbreviate "ins";
+Abbreviate " time";
+Abbreviate " use";
+Abbreviate " soon";
+Abbreviate " acid";
+Abbreviate "low";
+Abbreviate " un";
+Abbreviate " ma";
+Abbreviate "com";
+Abbreviate "() ]^";
+Abbreviate " wh";
+Abbreviate "_to/";
+Abbreviate " ope";
+Abbreviate " le";
+Abbreviate "ten";
+
+Constant Story "Plague on the Discovery";
+Constant Headline "^Morgan Tyler series #3 of 5^Copyright (c) 2026 Gianluca Girelli^https://bdb-project.itch.io^Type ABOUT for further info and credits.^^";
+
+Array UUID_ARRAY string "UUID://e66a7408-e471-4198-b85d-f971767ed008//";
+#Ifdef UUID_ARRAY;
+#Endif;
+
+Release 1;
+Serial "261010";
+
+!Inform 6 constants
+Constant DEATH_MENTION_UNDO;
+Constant MAX_CARRIED = 10;
+Constant NO_SCORE;
+
+!PunyInform constants
+Constant CUSTOM_ABBREVIATIONS;
+Constant OPTIONAL_EXTENDED_METAVERBS;
+Constant OPTIONAL_EXTENDED_VERBSET;
+Constant OPTIONAL_FULL_DIRECTIONS;
+Constant OPTIONAL_PRINT_SCENERY_CONTENTS;
+Constant OPTIONAL_PROVIDE_UNDO;
+Constant RUNTIME_ERRORS 0;!0 for release, 2 for debug
+
+!PunyInform static messages
+Constant MSG_COMMENT_NO_TRANSCRIPT "Comment recorded. Use SCRIPT ON to save future comments in a transcript.^";
+Constant MSG_COMMENT_TRANSCRIPT "Comment recorded.^";
+Constant MSG_PARSER_NO_INPUT "You need to enter a command.";
+Constant MSG_PARSER_UNKNOWN_VERB "That's not a verb I recognise.";
+Constant MSG_SORRY_DEFAULT "Oh, don't apologise.";
+Constant MSG_WAIT_DEFAULT "Time passes...";
+
+!PunyInform dynamic messages
+Constant MSG_CLOSE_NOT_OPEN 1000;
+Constant MSG_LOCK_ALREADY_LOCKED 1001;
+Constant MSG_LOCK_CLOSE_FIRST 1002;
+Constant MSG_LOCK_KEY_DOESNT_FIT 1003;
+Constant MSG_UNLOCK_ALREADY_UNLOCKED 1004;
+Constant MSG_UNLOCK_KEY_DOESNT_FIT 1005;
+
+Constant MSG_SMELL_DEFAULT 1006;
+
+!Game-specific constants
+Constant AN "an";
+Constant ARE_CRUMPLED ", are crumpled in a lifeless heap on the floor. Their bodies are ";
+Constant CANT_READ_FROM_DISTANCE "You can't read it from a distance.";
+Constant COVERED_WITH_SORES "covered with horrible sores and you suspect it might be very infectious.";
+Constant DEAL_WITH_CORPSE_FIRST "Deal with the corpse first.";
+Constant DEAL_WITH_CORPSES_FIRST "Deal with the corpses first.";
+Constant IS_CRUMPLED ", is crumpled in a lifeless heap on the floor. His body is ";
+Constant NOW_CHARRED "now charred and the area is sanitised.";
+Constant YOU_DIE_FROM_INFECTION "Your body suddenly fills with blisters and then sores. Your vision blurs and in a few minutes it's over for you.";
+Constant YOU_NOW_HAVE_PARTS_TO_MAKE_BOMB "Taken. You now have all the parts you need to make a bomb.";
+Constant GAS_EXPLODES "As soon as you fire the flamethrower, the gas in the air ignites and everything is engulfed in flames...including you! The Discovery explodes, sending debris in every direction. That wasn't a very smart move on your part. Your career ends here.";
+Constant DROIDS_CATCH_YOU "^You took too long to evade the droids. They found you and struck you down with their lasers. You're doomed.";
+Constant DISENGAGE_LEVER_ATTRACTS_YOUR_ATTENTION " The disengage lever attracts your attention, though.";
+Constant VENT_ATM "In case of emergency, the atmosphere on the Discovery can be cleared using the vent valve.";
+
+!Replaced actions
+Replace _UpdateDarkness;
+Replace GoSub; !Delete if diagonal directions are used
+Replace LockSub;
+Replace UnlockSub;
+
+Include "globals.h";
+
+!Game-specific variables
+
+!========================================
+! Entry point routines
+!========================================
+[ ChooseObjects obj code;
+  if (code == 2)
+  {
+    ! Stage 1: Disambiguation
+    if (action_to_be == ##Close)
+    {
+      if (obj hasnt openable)
+        return 0; !Inappropriate
+      if (obj has open)
+        return 1; !Appropriate
+    }
+    if (action_to_be == ##Lock)
+    {
+      if (obj hasnt lockable)
+        return 0; !Inappropriate
+      if (obj hasnt locked)
+        return 1; !Appropriate
+    }
+    if (action_to_be == ##Open)
+    {
+      if (obj hasnt openable)
+        return 0; !Inappropriate
+      if (obj hasnt open)
+        return 1; !Appropriate
+    }
+    if (action_to_be == ##Unlock)
+    {
+      if (obj hasnt lockable)
+        return 0; !Inappropriate
+      if (obj has locked)
+        return 1; !Appropriate
+    }
+  }
+  ! Stage 2: Processing an "all"
+  if (obj has scenery or concealed or static or animate)
+    return 2; !Force exclusion
+  if (action_to_be == ##Take && obj ~= player && obj notin player)
+    return 1; !Force inclusion
+  if (action_to_be == ##Drop && obj in player && obj hasnt worn)
+    return 1; !Force inclusion
+  return 0; !Accept parser's decision
+];
+
+[ DeathMessage;
+  if (deadflag == 3)
+    print "You could have done better";
+];
+
+[ InScope person i;
+  if (person == player && location == thedark)
+    objectloop(i in real_location)
+      if (i has moved)
+        PlaceInScope(i);
+  rfalse;
+];
+
+[ LibraryMessages p_msg p_arg_1 p_arg_2;
+  switch (p_msg)
+  {
+    MSG_CLOSE_NOT_OPEN:
+      print_ret (CTheyreOrIts)noun, " already closed.";
+    MSG_LOCK_ALREADY_LOCKED:
+      print_ret (CTheyreOrIts)noun, " already locked.";
+    MSG_LOCK_CLOSE_FIRST:
+      "You'll have to close ", (ItOrThem)noun, " first.";
+    MSG_LOCK_KEY_DOESNT_FIT:
+      print_ret (The)second, " ", (DoOrDoes)second, "n't fit the lock.";
+    MSG_UNLOCK_ALREADY_UNLOCKED:
+      print_ret (CTheyreOrIts)noun, " already unlocked.";
+    MSG_UNLOCK_KEY_DOESNT_FIT:
+      print_ret (The)second, " ", (DoOrDoes)second, "n't fit the lock.";
+    MSG_SMELL_DEFAULT:
+      if (helmet has worn)
+        "The helmet prevents you from smelling the air outside.";
+      if (gas hasnt general)
+        "The gas has an acrid smell, making it difficult to breathe. You suspect it may be flammable.";
+      else
+        "You can no longer smell any gas, so the air must now be clean.";
+  }
+  p_arg_1 = p_arg_2;
+];
+
+Include "puny.h";
+
+!========================================
+! Initialisation
+!========================================
+[ Initialise;
+  location = room01;
+  lookmode = 2;
+  move suit to player;
+  no_implicit_actions = true;
+  player.description = "You are Morgan Tyler, a former citizen of Thalos and now a special agent of the Earth Government. When returning to Earth after your most recent undercover assignment, you were ordered to carry out a rescue mission aboard the Discovery, but things haven't been going smoothly.";
+  StartDaemon(droids); !the droids are seeking you
+  StartDaemon(gas);    !and so is the gas
+  "^While returning to Earth after one of your undercover missions, your superiors told you to try and find the Discovery, an exploration ship that went missing just a few days ago. You managed to find it floating adrift near the asteroid belt between Jupiter and Mars. You tried contacting the ship, but there was no response. Why did no one answer your calls? Where was the crew? Where had the ship been the last few days?^^You then contacted your superiors on Earth to notify them of your find and they instructed you to conduct a rescue mission. You carefully approached the Discovery, docked your ship, extended the pressurised boarding tunnel and entered the Discovery through the airlock. As soon as you did, a group of security droids opened fire.^^Unable to understand what was going on, but moved by your survival instinct, you sought cover and hid in the semi-dark docking bay. As the droids were now searching for you, the only way out seemed to be a metal ladder. Beyond the ladder, you might find more trouble, but this was not the time for indecision. The droids were on the hunt!^";
+];
+
+!========================================
+! Classes
+!========================================
+Class Body
+with
+  short_name
+  [;
+    if (self has general)
+      print "charred ";
+    rfalse;
+  ],
+  life
+  [;
+    Ask:
+      print_ret (The)self, " tell", (SingularS)self, " no tales.";
+    Attack, ThrowAt:
+      "Why? Let ", (the)self, " rest in peace.";
+    Give:
+      "Dead bodies aren't normally in the habit of accepting gifts.";
+    Kiss:
+      "Did you notice the condition of the corpse", (SingularS)self, "? There's something very wrong here. Not that trying to kiss ", (a)self, " is normal.";
+    Show:
+      print_ret (The)self, " show", (SingularS)self, " no interest in ", (the)noun, ". I wonder why?";
+    Talk:
+      "You strike up a conversation with ", (the)self, ", but there's no response.";
+    Tell:
+      print_ret (The)self, " listen", (SingularS)self, " intently to what you have to say. Or maybe not, it's hard to tell.";
+    WakeOther:
+      "You give ", (the)noun, " a shake, but there's no response.";
+  ],
+  before
+  [;
+    Burn:
+      if (second == nothing && flamethrower in player)
+      {
+        print "(with the flamethrower)^";
+        second = flamethrower;
+      }
+      if (second == nothing)
+        "You don't have anything you can use to burn things.";
+      if (second == pistol)
+        "The pistol can shoot, but it can't burn anything.";
+      if (second ~= flamethrower)
+        "You can't burn anything with ", (a)second, ".";
+      if (flamethrower.number == 0)
+        "It looks like your flamethrower is empty.";
+      if (self has general)
+        "You've already burnt ", (ItOrThem)noun, " once, so save your fuel.";
+      if (gas hasnt general)
+      {
+        deadflag = 1;
+        print_ret (string)GAS_EXPLODES;
+      }
+      !Print the noun first, before it becomes charred
+      print "You burn ", (the)noun, " with the flamethrower. ";
+      flamethrower.number--;
+      give self general;
+      StopDaemon(self);
+      "For a moment, a horrible stench of burned flesh fills the room, but an automatic system kicks in and clears the air. It's now safe to inspect the room.";
+    Pull, Push, Search, Take, Touch, Turn:
+      if (self has general)
+        "After using the flamethrower, there's nothing worthy of your attention, apart from charred remains.";
+      deadflag = 1;
+      print_ret (string)YOU_DIE_FROM_INFECTION;
+    Shoot:
+      if (second == nothing && pistol in player)
+      {
+        print "(with the laser pistol)^";
+        second = pistol;
+      }
+      if (second == nothing)
+        "You don't have a weapon.";
+      if (second == pistol)
+        "Shooting ", (the)self, " with the laser pistol is not likely to improve the situation.";
+      if (second ~= flamethrower)
+        "You can't shoot anything with ", (a)second, ".";
+      <<Burn self second>>;
+  ],
+  daemon
+  [;
+    switch (self.time_left++)
+    {
+      2: "^This looks like the result of an infectious disease. Do something to eliminate it, before it's too late.";
+      4: deadflag = 1;
+         print_ret "^", (string)YOU_DIE_FROM_INFECTION;
+    }
+  ],
+  time_left 0,
+has animate;
+
+Class Important
+with
+  before
+  [;
+    Burn:
+      print "This ";
+      if (self hasnt general)
+        print "might contain";
+      else
+        print "contains";
+      " important information, so you'd better not burn it.";
+  ],
+has;
+
+Class Lever
+with
+  name 'lever',
+  description "It's a spring-loaded lever that's used to open or close the valve in order to flush the Discovery's atmosphere in case of an emergency.",
+  before
+  [ this_valve;
+    switch (self)
+    {
+      lever05: this_valve = valve05;
+      lever06: this_valve = valve06;
+      lever16: this_valve = valve16;
+    }
+    Pull:
+      if (self == lever06)
+        "The lever is jammed. No matter how hard you pull, it won't budge. It looks like this valve can't be opened, but it's not the only one present inside the ship.";
+      if (this_valve hasnt open)
+      {
+        give this_valve open;
+        print "When you pull the lever, the valve opens and all the air is sucked out of the ship into the vacuum of outer space";
+        if (gas hasnt general)
+        {
+          give gas general;
+          StopDaemon(gas);
+          print ", freeing the environment of the gas";
+        }
+        print ". The lever then springs back into place.";
+        if (helmet hasnt worn)
+        {
+          deadflag = 1;
+          "^^You suddenly realise your mistake, but it's too late. You grab your throat with your hands and try to scream, but all the air you had in your lungs is gone. Your face turns purple, then pale. Finally, you collapse to the ground, lifeless.";
+        }
+        StartDaemon(helmet);
+        print "^^The airflow is so violent that it sends you against the wall and you hit your head hard. Wearing the helmet saved your life";
+        if (helmet has general)
+          print " once again";
+        else
+        {
+          give helmet general;
+          print ". However, the helmet is now damaged and it won't protect you for very long";
+        }
+        ". You can now close the valve and remove the helmet, if you like.";
+      }
+      else
+      {
+        give this_valve ~open;
+        StopDaemon(helmet);
+        "You close the valve, and an automated system quickly refills the area.";
+      }
+    Push:
+      "It can only be pulled.";
+  ],
+has static;
+
+Class TouchPanel
+with
+  name 'touch' 'panel',
+  description
+  [;
+    print "The panel controls the docking bay door. You only need to touch it to open or close the door. This makes it easy to use when wearing a bulky space suit.";
+    if (self has general)
+      print " The panel is now smashed to pieces, so the door won't be doing any more opening or closing until someone fixes it.";
+    "";
+  ],
+  before
+  [;
+    Attack:
+      if (self has general)
+        "You've already broken it.";
+      give self general;
+      print "You hit the panel, smashing it to pieces. Now no one will be able to open or close the door from this side.";
+      if (self == panel02 && bay_door hasnt open)
+        print " Oh, oh. Now you're locked in with the security droids!";
+      "";
+    Push, Touch:
+      if (self has general)
+        "Nothing happens, no doubt because you broke it.";
+      if (bay_door has open)
+      {
+        give bay_door ~open;
+        print "The bay door closes";
+        if (location == room03 && panel02 has general)
+        {
+          droids.time_left = 12;
+          StopDaemon(droids);
+          print ". Now the security droids won't be able to get to you";
+          if (~~TestScope(flamethrower))
+            print ", but you won't be able to get to the flamethrower, either";
+        }
+        ".";
+      }
+      give bay_door open;
+      if (location == room03 && panel02 has general)
+        StartDaemon(droids);
+      "The bay door opens.";
+  ],
+has;
+
+Class Valve
+with
+  name 'ventilation' 'small' 'vent' 'valve',
+  description
+  [;
+    print "It's a small ventilation valve used to vent the air inside the ship in case of an emergency. It's currently ";
+    if (self has open)
+      "open.";
+    else
+      "closed.";
+  ],
+  before
+  [;
+    Close:
+      if (self hasnt open)
+        "It's already closed.";
+      else
+        "It can't be closed manually. Try the lever.";
+    Open:
+      if (self has open)
+        "It's already open.";
+      else
+        "It can't be opened manually. Try the lever.";
+  ],
+has;
+
+!========================================
+! Inventory
+!========================================
+!----------------------------------------
+! Pressure suit
+!----------------------------------------
+Object suit "pressure suit"
+with
+  name 'pressure' 'suit',
+  description
+  [;
+    print "It's the pressure suit you usually wear during your space travels. Since you entered the Discovery through a pressurised boarding tunnel connected to your spaceship, there was no need to take your helmet with you";
+    if (helmet in player)
+    {
+      print ". Luckily, you were able to find a replacement on board the Discovery";
+      if (helmet has general)
+        print ", but it's now damaged";
+    }
+    ".";
+  ],
+  before
+  [;
+    Disrobe:
+      "You'd better keep your suit on. You're on a spaceship that seems to have more than one problem. You don't know when you may need it.";
+  ],
+has clothing worn;
+
+!========================================
+! Room 1: Docking Bay
+!========================================
+Object room01 "Docking Bay"
+with
+  description "The large area you're in is the one intended for the docking and take-off of small connecting spaceships. Towards the south, an airlock leads back to your ship, but it's now closed. The only other exit is a metal ladder that leads up to a catwalk.",
+  s_to "The airlock is closed and you have stuff to do. There's no time to go back.",
+  u_to
+  [;
+    give droids scenery;
+    droids.time_left = 6;
+    print "You climb the ladder to escape from the droids.^^";
+    return room02;
+  ],
+  before
+  [;
+    Hint:
+      "Run away from the droids as soon as you can.";
+  ],
+has light;
+
+!----------------------------------------
+! Docking bay (floating object)
+!----------------------------------------
+Object "docking bay"
+with
+  name 'docking' 'bay' 'area' 'take-off' 'large' 'environment',
+  description "It's a large environment inside the Discovery where shuttles take off and land after their exploration missions. It's currently empty and you wonder where all the shuttles have gone.",
+  found_in room01 room02,
+has scenery;
+
+!----------------------------------------
+! Ladder (floating object)
+!----------------------------------------
+Object "ladder"
+with
+  name 'metal' 'ladder',
+  description
+  [;
+    print "It's a metal ladder that leads ";
+    if (self in room01)
+      "up to the catwalk.";
+    else
+      "down to the docking bay.";
+  ],
+  before
+  [;
+    Climb:
+      if (self in room01)
+        <<Go FAKE_U_OBJ>>;
+      else
+        <<Go FAKE_D_OBJ>>;
+  ],
+  found_in room01 room02,
+has scenery;
+
+!----------------------------------------
+! Airlock
+!----------------------------------------
+Object "airlock" room01
+with
+  name 'airlock' 'opening',
+  description "It's the opening that allowed you to board the Discovery from your ship. It's currently closed.",
+  before
+  [;
+    Close:
+      "It's already closed.";
+    Open:
+      "You just came from that direction. As you have other stuff to do, don't bother with the airlock.";
+  ],
+has scenery;
+
+!----------------------------------------
+! Catwalk (floating object)
+!----------------------------------------
+Object "catwalk"
+with
+  name 'catwalk',
+  description "It runs above the docking bay and allows you to monitor the operations there from a safe distance.",
+  found_in room01 room02,
+has scenery;
+
+!----------------------------------------
+! Security droids (floating object)
+!----------------------------------------
+Object droids "security droids"
+with
+  article "a patrol of",
+  name 'patrol' 'of' 'surveillance' 'security' 'droids',
+  description "These droids are normally active during the crew's hybernation period, when they are employed in basic surveillance and monitoring tasks. Something seems to have gone wrong, as they now appear to be in seek-and-destroy mode.",
+  before
+  [;
+    Attack, Burn, Shoot:
+      if (second == nothing)
+        "You should tell me what you want to use for this action.";
+      if (second == pistol)
+        "A laser pistol is useless against an entire patrol of droids.";
+      if (second == flamethrower)
+      {
+        deadflag = 1;
+        if (gas hasnt general)
+          print_ret (string)GAS_EXPLODES;
+        else
+          "The flames slow down the droids for a moment, but then they resume their patrol and, having intercepted you, they kill you on the spot.";
+      }
+    Take:
+      "Do you have a death wish? The droids are in seek-and-destroy mode.";
+  ],
+  daemon
+  [;
+
+    switch (self.time_left++)
+    {
+      !0 to 5 are in docking bay
+      0: "^The security droids are looking for you.";
+      2: "^The security droids have sensed your presence and are zooming in on you.";
+      4: "^The security droids have tracked you down and are approaching fast. You'd better do something before it's too late.";
+      5: deadflag = 1;
+        print_ret (string)DROIDS_CATCH_YOU;
+      !6 to 12 are on catwalk
+      6: "^The security droids look confused. Their prey has seemingly disappeared.";
+      7: "^The security droids are looking for you.";
+      9: give self ~scenery;
+      "^The security droids have sensed your presence and are climbing up the ladder.";
+      11: "^The security droids have tracked you down and are approaching fast. You'd better do something before it's too late.";
+      12: if (location == room02)
+          {
+            deadflag = 1;
+            print_ret (string)DROIDS_CATCH_YOU;
+          }
+          if (bay_door hasnt open && panel02 hasnt general)
+            print "^The bay door opens, the";
+          else
+            print "^The";
+          deadflag = 1;
+          " security droids stream in and strike you down with their lasers.";
+    }
+  ],
+  time_left 0,
+  found_in room01 room02,
+has pluralname animate;
+
+!----------------------------------------
+! Gas (floating object)
+!----------------------------------------
+Object gas "gas"
+with
+  name 'gas',
+  description
+  [;
+    print "You can't see the gas. ";
+    <<Smell>>;
+  ],
+  before
+  [;
+    Smell:
+      <<Smell>>;
+  ],
+  daemon
+  [;
+    if (helmet hasnt worn)
+      "^There's a distinct smell of gas in the air.";
+  ],
+  found_in
+  [;
+    rtrue;
+  ],
+has scenery;
+
+!========================================
+! Room 2: Catwalk above Docking Bay
+!========================================
+Object room02 "Catwalk above Docking Bay"
+with
+  description "The narrow catwalk you're now on is connected to the docking and takeoff area of the Discovery by a metal ladder. A door leads east. Below you, in the docking area, you can see the security droids searching for you. You can go down using the ladder, but some of the droids are heading in your direction.",
+  e_to bay_door,
+  d_to
+  [;
+    print "You can't ";
+    if (droids has scenery)
+      print "go back to the docking bay";
+    else
+      print "get to the ladder";
+    " or the droids will kill you.";
+  ],
+  before
+  [;
+    Hint:
+      if (panel02 hasnt general)
+        "Sometimes violence is the answer.";
+  ],
+has light;
+
+!----------------------------------------
+! Docking bay door (floating object)
+!----------------------------------------
+Object bay_door "docking bay door"
+with
+  name 'docking' 'bay' 'west' 'door',
+  description
+  [;
+    print "It's the door to the ";
+    if (player in room02)
+      print "inside of the Discovery";
+    else
+      print "docking bay";
+    print ". It's currently ";
+    if (self has open)
+      "open.";
+    else
+      "closed.";
+  ],
+  door_dir
+  [;
+    if (self in room02)
+      return e_to;
+    else
+      return w_to;
+  ],
+  door_to
+  [;
+    if (self in room03)
+      return room02;
+    else
+      return room03;
+  ],
+  before
+  [;
+    Close:
+      if (self hasnt open)
+        "It's already closed.";
+      else
+        "You can't close it manually.";
+    Open:
+      if (self has open)
+        "It's already open.";
+      else
+        "You can't open it manually.";
+  ],
+  found_in room02 room03,
+has door openable scenery;
+
+!----------------------------------------
+! Touch panel
+!----------------------------------------
+Object panel02 "touch panel" room02
+class TouchPanel
+has static;
+
+!----------------------------------------
+! Flamethrower
+!----------------------------------------
+Object flamethrower "flamethrower" room02
+with
+  name 'flamethrower' 'flame' 'thrower',
+  description
+  [;
+    print "It's a deadly weapon that you've used before";
+    if (self.number == 3 && tank.number == 3)
+      print ", but you wonder why such a weapon would be present on a civilian exploration ship.";
+    else
+      print " and it's come in handy once again.";
+    " A gauge on the flamethrower indicates how much fuel is available.";
+  ],
+  before
+  [;
+    Fill:
+      "Maybe you meant 'load'?";
+    Load:
+      if (second == nothing && tank in player)
+      {
+        print "(with the fuel tank)^";
+        second = tank;
+      }
+      if (second == nothing)
+        "You don't have anything to load it with.";
+      if (second ~= tank)
+        "You can't very well load the flamethrower with ", (a)second, ".";
+      if (self.number == 3)
+        "You don't need to load the flamethrower yet as it is fully loaded."; 
+      if (tank.number == 0)
+        "The fuel tank is now empty, and you can't use it to load the flamethrower any more.";
+      ! determining how much fuel can fit in the thrower
+      self.max_cap = 3 - self.number;
+      if (tank.number < max_cap)
+      {
+        self.number = self.number + self.max_cap;
+        tank.number = tank.number - self.max_cap;
+      }
+      else
+      {
+        self.number = self.number + tank.number;
+        tank.number = 0;
+      }
+      "You load the flamethrower with the contents of the fuel tank.";
+  ],
+  number 3,
+  max_cap 0, 
+  add_to_scope gauge,
+has;
+
+!----------------------------------------
+! Gauge
+!----------------------------------------
+Object gauge "gauge"
+with
+  name 'gauge',
+  description
+  [;
+    print "It tells you how much fuel is left in the flamethrower. According to the gauge, it's currently ";
+    switch (flamethrower.number)
+    {
+      0: print"empty. ";
+         if (tank hasnt moved)
+           "You'd better find some more fuel.";
+         "";
+      1: "one-third full.";
+      2: "two-thirds full.";
+      3: "full.";
+    }
+  ],
+  before
+  [;
+    Read:
+      <<Examine self>>;
+  ],
+has scenery;
+
+!========================================
+! Room 3: Central Deck Corridor
+!========================================
+Object room03 "Central Deck Corridor"
+with
+  description "You're in a corridor with exits in all the four cardinal directions. The south and west exits have doors. From this position you can also go up or down.",
+  n_to room04,
+  s_to navigation_door,
+  e_to room06,
+  w_to bay_door,
+  u_to room05,
+  d_to room16,
+  before
+  [;
+    Go:
+      if (selected_direction ~= w_to && panel02 hasnt general)
+        "You'd better find a way to stop those droids before they find you and kill you. They are programmed to seek and destroy.";
+    Hint:
+      if (panel02 hasnt general)
+        "Sometimes violence is the answer, but not here.";
+  ],
+has light;
+
+!----------------------------------------
+! Corridor
+!----------------------------------------
+Object "corridor" room03
+with
+  name 'central' 'deck' 'corridor',
+  description "It's a pivot point that connects different rooms on this level and allows access to the upper and lower one.",
+has scenery;
+
+!----------------------------------------
+! Touch panel
+!----------------------------------------
+Object panel03 "touch panel" room03
+class TouchPanel
+has static;
+
+!----------------------------------------
+! Navigation room door (floating object)
+!----------------------------------------
+Object navigation_door "navigation room door"
+with
+  name 'navigation' 'nav' 'room' 'door',
+  description
+  [;
+    print "It's the door ";
+    if (self in room03)
+      print "to";
+    else
+      print "from";
+    print" the navigation room. It's currently ";
+    if (self has open)
+      "open.";
+    else
+      "closed.";
+  ],
+  door_dir
+  [;
+    if (self in room03)
+      return s_to;
+    else
+      return n_to;
+  ],
+  door_to
+  [;
+    if (self in room03)
+      return room23;
+    else
+      return room03;
+  ],
+  with_key electronic_key,
+  found_in room03 room23,
+has door lockable locked openable scenery;
+
+!========================================
+! Room 4: Storeroom
+!========================================
+Object room04 "Storeroom"
+with
+  description "You're in a small room whose function is easy to guess. The shelf and the containers scattered here and there reveal that it's a storeroom. The only exit is towards the south.",
+  s_to room03,
+has light;
+
+!----------------------------------------
+! Storeroom
+!----------------------------------------
+Object "storeroom" room04
+with
+  name 'storeroom',
+  description "A few containers, once safely secured to avoid inadvertent movement, are now scattered around.",
+has scenery;
+
+!----------------------------------------
+! Containers
+!----------------------------------------
+Object "containers" room04
+with
+  name 'containers' 'materials' 'supply' 'goods',
+  description "The containers hold different types of materials and supplies.",
+  before
+  [;
+    Open, Search:
+      "Don't bother with them.";
+  ],
+has pluralname scenery;
+
+!----------------------------------------
+! Shelf
+!----------------------------------------
+Object shelf "shelf" room04
+with
+  name 'small' 'shelf',
+  description
+  [;
+    give self general;
+    print "It's a small shelf, suitable for placing small objects on. ";
+    <<Search self>>;
+  ],
+has static supporter;
+
+!----------------------------------------
+! Pressure helmet
+!----------------------------------------
+Object helmet "pressure helmet" shelf
+with
+  name 'pressure' 'helmet',
+  description
+  [;
+    print "The helmet completes the suit and provides full protection ";
+    if (helmet has worn)
+      print "now that";
+    else
+      print "when";
+    print " it's worn.";
+    if (self has general)
+      print " However, after you banged your head, it's now damaged and you're not sure that it can fulfill its intended purpose if chemicals or pathogens be present in the air.";
+    "";
+  ],
+  after
+  [;
+    Disrobe:
+      if (valve05 has open || valve16 has open)
+      {
+        deadflag = 1;
+        "You remove the helmet, but remember too late that you never closed the valve. You try to put it back on, but the total absence of air knocks you about. In a matter of seconds and you collapse to the ground, lifeless.";
+      }
+      if (gas has general)
+        "When you remove the helmet, you realise you can't smell the gas any more. The leak must have been in the docking bay, which is now locked, so you probably won't have any more troubles with the gas.";
+    Take:
+      if (detonator in nothing)
+      {
+        move detonator to location;
+        move paper to location;
+        "As soon as you take the helmet, something hidden inside it falls to the floor.";
+      }
+  ],
+  daemon
+  [;
+    switch (self.time_left++)
+    {
+      9: "^Your helmet, already damaged when you banged your head, becomes more and more ineffective. Did you forget to close the ventilation valve?";
+      14: "^Your helmet is now damaged beyond repair. You'd better do something soon.";
+      19: deadflag = 1;
+         "^Your damaged helmet can no longer resist the decompressed environment. It explodes, exposing you to zero atmosphere. The air is rapidly sucked out from your lungs, then you start freezing due to the extremely low temperature. It looks like your journey is over.";
+    }
+  ],
+  time_left 0,
+has clothing;
+
+!----------------------------------------
+! Detonator
+!----------------------------------------
+Object detonator "detonator"
+with
+  name 'detonator',
+  description
+  [;
+    print "It's a detonator with a button on top";
+    if (explosive notin player)
+      ", but it's useless without some explosive to connect it to.";
+    else
+      ". As you've already got some explosive, you now have all the components you need to make a bomb.";
+  ],
+  after
+  [;
+    Take:
+      if (explosive in player)
+        print_ret (string)YOU_NOW_HAVE_PARTS_TO_MAKE_BOMB;
+  ],
+  add_to_scope button,
+has;
+
+!----------------------------------------
+! Button
+!----------------------------------------
+Object button "button"
+with
+  name 'button',
+  description "It looks like you press the button to activate the detonator.",
+  before
+  [;
+    Push:
+      "Nothing happens. The detonator needs to be connected to some explosive before you can activate it.";
+  ],
+has scenery;
+
+!----------------------------------------
+! Scrap of paper
+!----------------------------------------
+Object paper "scrap of paper"
+with
+  name 'scrap' 'of' 'paper',
+  description
+  [;
+    print "It's a scrap of paper that someone had hidden inside the helmet.";
+    if (self hasnt general)
+      print " There's something written on it, so you should probably read it.";
+    "";
+  ],
+  before
+  [;
+    Read:
+      if (self notin player)
+        print_ret (string)CANT_READ_FROM_DISTANCE;
+      give self general;
+      "'DESTROY THIS SHIP!' Who might have written such a message? The captain, perhaps?";
+  ],
+has;
+
+!========================================
+! Room 5: Upper Deck Corridor
+!========================================
+Object room05 "Upper Deck Corridor"
+with
+  description "The corridor in which you now find yourself leads to the north, south, east and west in various rooms of the Discovery. You can also go down to the lower floors of the ship.",
+  n_to
+  [;
+    if (corpse13 hasnt general)
+    {
+      corpse13.time_left = 0;
+      StartDaemon(corpse13);
+    }
+    return room13;
+  ],
+  s_to room15,
+  e_to
+  [;
+    if (corpse12 hasnt general)
+    {
+      corpse12.time_left = 0;
+      StartDaemon(corpse12);
+    }
+    return room12;
+  ],
+  w_to room14,
+  d_to room03,
+  before
+  [;
+    Hint:
+      print_ret (string)VENT_ATM;
+  ],
+has light;
+
+!----------------------------------------
+! Upper deck corridor
+!----------------------------------------
+Object "corridor" room05
+with
+  name 'upper' 'deck' 'corridor',
+  description "It's a pivoting point that connects different rooms on this level and allows access to the lower one.",
+has scenery;
+
+!----------------------------------------
+! valve
+!----------------------------------------
+Object valve05 "valve" room05
+class Valve
+has static;
+
+!----------------------------------------
+! Lever
+!----------------------------------------
+Object lever05 "lever" room05
+class Lever
+has static;
+
+!========================================
+! Room 6: Central Hub
+!========================================
+Object room06 "Central Hub"
+with
+  description "You're standing in the central hub of the Discovery. From here you can move in every direction. You can also go down.",
+  n_to
+  [;
+    if (corpse08 hasnt general)
+    {
+      corpse08.time_left = 0;
+      StartDaemon(corpse08);
+    }
+    return room08;
+  ],
+  s_to room09,
+  e_to
+  [;
+    if (corpse10 hasnt general)
+    {
+      corpse10.time_left = 0;
+      StartDaemon(corpse10);
+    }
+    return room10;
+  ],
+  w_to room03,
+  d_to room07,
+  before
+  [;
+    Hint:
+      print_ret (string)VENT_ATM;
+  ],
+has light;
+
+!----------------------------------------
+! Central hub
+!----------------------------------------
+Object "central hub" room06
+with
+  name 'central' 'hub',
+  description "From here you can move in every direction. You can also go down.",
+has scenery;
+
+!----------------------------------------
+! valve
+!----------------------------------------
+Object valve06 "valve" room06
+class Valve
+has static;
+
+!----------------------------------------
+! Lever
+!----------------------------------------
+Object lever06 "lever" room06
+class Lever
+has static;
+
+!----------------------------------------
+! Control unit
+!----------------------------------------
+Object "control unit" room06
+with
+  name 'control' 'unit',
+  description "It regulates the main functions on the ship, including the environmental temperature that is, at present, very low. You try to raise it a little bit, but soon realise that it's a waste of time, so you desist.",
+  before
+  [;
+    Attack:
+      "In a moment of anger you consider smashing the unit into pieces, but it wouldn't do any good, so you take a little breath and move on.";
+    Take:
+      "Even if you could take it, you have no use for it.";
+  ],
+has static;
+
+!========================================
+! Room 7: Engine Room
+!========================================
+Object room07 "Engine Room"
+with
+  description "You've reached a large, dimly-lit room where enormous cylinders of metal hum continuously. This is the engine room of the Discovery, whose only exit is up towards the central hub.",
+  u_to
+  [;
+    if (bomb in player && dummy_button has general)
+      "Are you crazy? Are you going to take an active bomb with you? Leave it here, where it will be most effective!";
+    return room06;
+  ],
+  before
+  [;
+    Hint:
+      if (note has general)
+        "As the captain said, blow up the engine if the situation requires it.";
+      "Someone might have left instructions for dealing with the engine.";
+  ],
+has light;
+
+!----------------------------------------
+! Engine room
+!----------------------------------------
+Object "engine room" room07
+with
+  name 'large' 'dimly-lit' 'engine' 'room',
+  description "The place is dirty and semi-dark. Just as any other engine room you've seen before.",
+has scenery;
+
+!----------------------------------------
+! Engine
+!----------------------------------------
+Object "engine" room07
+with
+  article "the",
+  name 'engine' 'enormous' 'cylinders' 'of' 'metal',
+  description "This is what allows the Discovery to travel across and beyond the Solar System at nearly light-speed. None of this matters at the moment.",
+  before
+  [;
+    Attack:
+      "You can't destroy the engine in this way. You need something far more powerful.";
+    Burn:
+      "If it catches fire you'll have no escape.";
+  ],
+has static;
+
+!----------------------------------------
+! Slot
+!----------------------------------------
+Object slot07 "slot" room07
+with
+  name 'small' 'slot',
+  description
+  [;
+    print "It's a small slot used to hold an emergency light. ";
+    <<Search self>>;
+  ],
+  before
+  [;
+    Receive:
+      if (noun ~= emergency_light)
+        print_ret (The)noun, " won't fit in the slot.";
+  ],
+  after
+  [;
+    Receive:
+      if (noun == emergency_light)
+      {
+        give noun ~light;
+        "When you put the emergency light back in the slot, it automatically turns off.";
+      }
+    LetGo:
+      if (noun == emergency_light)
+      {
+        give noun light;
+        "When you take the emergency light out of the slot, it automatically turns on.";
+      }
+  ],
+has container open static;
+
+!----------------------------------------
+! Emergency light
+!----------------------------------------
+Object emergency_light "emergency light" slot07
+with
+  article AN,
+  name 'emergency' 'light',
+  description
+  [;
+    print "It's a battery-powered emergency light. It's currently ";
+    if (self has light)
+      "on.";
+    else
+      "off.";
+  ],
+  before
+  [;
+    SwitchOff:
+      if (self hasnt light)
+        "It's already off.";
+      else
+        "You can't turn it off manually.";
+    SwitchOn:
+      if (self has light)
+        "It's already on.";
+      else
+        "You can't turn it on manually.";
+  ],
+has;
+
+!----------------------------------------
+! Bomb
+!----------------------------------------
+Object bomb "bomb"
+with
+  name 'bomb',
+  description "It's the bomb you made by connecting the detonator to the explosive. A button on the detonator allows you to activate it.",
+  before
+  [;
+    Make:
+      if (self notin nothing)
+        "You've already made the bomb.";
+      if (explosive notin player || detonator notin player)
+        "You're missing some parts to make a bomb.";
+      move explosive to limbo;
+      move detonator to limbo;
+      move bomb to player;
+      "You connect the detonator to the explosive to make a bomb. You can now activate it by pressing the button on top of the detonator.";
+  ],
+  daemon
+  [;
+    switch (self.time_left++)
+    {
+      0: "^The bomb is now active and will go off soon.";
+      3: "^Time is ticking away. Hurry up!";
+      5: deadflag = 1;
+         "^You wasted too much time. The bomb you placed in the engine room goes off and triggers a chain-reaction that destroys the Discovery, deck after deck. You might have preserved Earth from the plague, but, without the data extracted from the computer, others might come and make the same mistake as the crew of the Discovery. This time, you weren't up to the task. Next time, well, there won't be a next time, will there?";
+    }
+  ],
+  time_left 0,
+  add_to_scope dummy_button dummy_detonator dummy_explosive,
+has;
+
+!----------------------------------------
+! Dummy button on detonator
+!----------------------------------------
+Object dummy_button "button"
+with
+  name 'button',
+  description "It's the button that triggers the bomb. If you press it, the bomb will go off in a matter of minutes.",
+  before
+  [;
+    Drop, Take:
+      "It's part of the detonator. You can't separate it.";
+    Push:
+      if (location ~= room07)
+        "If the bomb isn't placed in the right location there's a chance the Discovery will not be destroyed and the plague might survive.";
+      if (self has general)
+        "You've already pressed the button and the bomb has been activated. You'd better run for your life.";
+      give self general;
+      StartDaemon(bomb);
+      "BOOM! Just kidding, but you'd better run...and fast!";
+  ],
+has scenery;
+
+!----------------------------------------
+! Dummy detonator
+!----------------------------------------
+Object dummy_detonator "detonator"
+with
+  name 'detonator',
+  description "It's connected to the explosive, so you're now dealing with a bomb that can be activated by pushing the button on the detonator. Be careful with it.",
+  before
+  [;
+    Drop, Take:
+      "You can't separate the detonator from the explosive now that you've made the bomb.";
+  ],
+has scenery;
+
+!----------------------------------------
+! Dummy explosive
+!----------------------------------------
+Object dummy_explosive "explosive"
+with
+  name 'explosive',
+  description "It's connected to the detonator, so you're now dealing with a bomb that can be activated by pushing the button. Be careful with it.",
+  before
+  [;
+    Drop, Take:
+      "You can't separate the explosive from the detonator now that you've made the bomb.";
+  ],
+has scenery;
+
+!========================================
+! Room 8: Pilots' Quarters
+!========================================
+Object room08 "Pilots' Quarters"
+with
+  description "The pilots' quarters is a narrow space in the hull where the pilots rest during off-duty periods or when they can rely on the auto-pilot. The only exit is to the south.",
+  s_to
+  [;
+    if (corpse08 hasnt general)
+      StopDaemon(corpse08);
+    return room06;
+  ],
+has;
+
+!----------------------------------------
+! Pilots' quarters
+!----------------------------------------
+Object "pilots' quarters" room08
+with
+  name 'pilots^' 'quarters',
+  description "It's a small but comfortable space, suitable for getting some rest after a heavy shift.",
+has scenery;
+
+!----------------------------------------
+! Man's body
+!----------------------------------------
+Object corpse08 "man's body" room08
+class Body
+with
+  name 'man' 'man^s' 'body' 'corpse' 'pilot',
+  description
+  [;
+    print "This man, possibly one of the pilots", (string)IS_CRUMPLED;
+    if (self hasnt general)
+      print_ret (string)COVERED_WITH_SORES;
+    else
+      print_ret (string)NOW_CHARRED;
+  ],
+has animate;
+
+!----------------------------------------
+! Captain's note
+!----------------------------------------
+Object note "captain's note" room08
+class Important
+with
+  name 'captain' 'captain^s' 'note',
+  description
+  [;
+    print "It's the note you found in the pilots' quarters.";
+    if (self hasnt general)
+      print " It might be worth reading it.";
+    "";
+  ],
+  before
+  [;
+    Read:
+      if (self notin player)
+        print_ret (string)CANT_READ_FROM_DISTANCE;
+      give self general;
+      "'In the last few days the disease has spread throughout the entire ship. It must be something we accidentaly picked up on Guyoth IV, where we lost part of our crew. One of the symptoms is mental instability and someone could do something stupid while I'm still trying to plot a route towards the Sun. That's why, for the time being, I removed the detonator from the armoury and hid it somewhere else. Also, I destroyed the access key to the explosives cache. Should I fail in modifying the route, my last resort is to blow up the engine. This will cause a chain-reaction that will destroy the Discovery and, hopefully, the pathogen.' Well, this explains a lot of things.";
+    Take:
+      if (corpse08 hasnt general)
+        print_ret (string)DEAL_WITH_CORPSE_FIRST;
+  ],
+has;
+
+!========================================
+! Room 9: Crew's Quarters
+!========================================
+Object room09 "Crew's Quarters"
+with
+  description "This is a large room intended for the accommodation of the on-board personnel, but it's a real mess. There are items of clothing thrown in a heap, personal belongings scattered on the floor and the wall lockers are all open. You can go back to the central hub to the north.",
+  n_to room06,
+has light;
+
+!----------------------------------------
+! Crew's quarters
+!----------------------------------------
+Object "crew's quarters" room09
+with
+  name 'crew^s' 'quarters' 'large' 'room',
+  description "The place is a total mess. You doubt you'll find anything useful here.",
+has scenery;
+
+!----------------------------------------
+! Heap of clothes
+!----------------------------------------
+Object "heap of clothes" room09
+with
+  name 'heap' 'of' 'clothes' 'clothing' 'mess',
+  description "It's a heap of clothes, thrown across the room for no reason.",
+  before
+  [;
+    Search:
+      "You search through the clothes, but don't find anything useful.";
+  ],
+has pluralname scenery;
+
+!----------------------------------------
+! Personal belongings
+!----------------------------------------
+Object "personal belongings" room09
+with
+  name 'personal' 'belongings' 'purses' 'backpacks',
+  description "It includes items like purses, backpacks and books scattered all over the place, but nothing of any use to you.",
+  before
+  [;
+    Search:
+      "You search through the personal belongings, but don't find anything useful.";
+  ],
+has pluralname scenery;
+
+!----------------------------------------
+! Books
+!----------------------------------------
+Object "books" room09
+with
+  name 'books',
+  description "Some of them are novels, others are technical manuals, but you doubt that any of them are of any help to you at the moment.",
+  before
+  [;
+    Read:
+      "You flip through the pages of a couple of books, but you really have no time for this, so you put them back.";
+    Search:
+      "You search through the pages of some of the books, but don't find anything useful.";
+  ],
+has pluralname scenery;
+
+!----------------------------------------
+! Wall lockers
+!----------------------------------------
+Object "wall lockers" room09
+with
+  name 'wall' 'lockers',
+  description "The lockers possibly contained all the items that are now scattered on the floor, as if someone was in an extreme hurry had tried to take what they could before leaving.",
+  before
+  [;
+    Close:
+      "Don't waste your time with the lockers. Leave them how you found them.";
+    Search:
+      "You search the lockers, but you don't find anything useful. A few of them have amusing posters pinned inside.";
+  ],
+has container openable open pluralname scenery;
+
+!----------------------------------------
+! Posters
+!----------------------------------------
+Object "posters" room09
+with
+  name 'posters' 'pictures' 'pin-ups',
+  description "Judging from the pictures, the Discovery must have been in service for a long time, as some of the models in those pin-ups have now retired.",
+  before
+  [;
+    Take:
+      "You have no use for posters.";
+  ],
+has pluralname scenery;
+
+!========================================
+! Room 10: Emergency Area
+!========================================
+Object room10 "Emergency Area"
+with
+  description "You've entered the area where the crew dons their space suits before exiting the ship for maintenance or accessing the escape pods in an emergency. The corridor unfolds east to west. From here you can also go down.",
+  e_to room11,!Conditional, see below
+  w_to
+  [;
+    if (corpse10 hasnt general)
+      StopDaemon(corpse10);
+    return room06;
+  ],
+  d_to room24,!Conditional, see below
+  before
+  [;
+    Go:
+      if (selected_direction == e_to or d_to && corpse10 hasnt general)
+        "You can't get past the corpse while it's infectious.";
+  ],
+has light;
+
+!----------------------------------------
+! Emergency area
+!----------------------------------------
+Object "emergency area" room10
+with
+  name 'emergency' 'area' 'corridor',
+  description "This corridor should hold the space suits for the crew, but it's now empty.",
+has scenery;
+
+!----------------------------------------
+! Man's body
+!----------------------------------------
+Object corpse10 "man's body" room10
+class Body
+with
+  name 'man' 'man^s' 'body' 'corpse' 'technician',
+  description
+  [;
+    print "The man, probably a technician performing his duties in the emergency room", (string)IS_CRUMPLED;
+    if (self hasnt general)
+      print_ret (string)COVERED_WITH_SORES;
+    else
+      "now charred, and the area sanitised.";
+  ],
+has animate;
+
+!========================================
+! Room 11: Cockpit
+!========================================
+Object room11 "Cockpit"
+with
+  description "You're in the cockpit of the spaceship. Two ergonomically-designed seats face the complex control instrumentation of the Discovery. The only exit is west.",
+  w_to room10,
+has light;
+
+!----------------------------------------
+! Cockpit
+!----------------------------------------
+Object "cockpit" room11
+with
+  name 'cockpit' 'screens' 'levers' 'buttons' 'throttles',
+  description
+  [;
+    print "The cockpit looks pretty bare, as there aren't many levers, buttons and throttles. It mostly contains a bunch of screens where the pilot can enter data or monitor the ship's functions.";
+    if (disengage_lever hasnt general)
+      print (string)DISENGAGE_LEVER_ATTRACTS_YOUR_ATTENTION;
+    "";
+  ],
+  before
+  [;
+    Search:
+      print "You search through the cockpit";
+      if (badge notin nothing)
+        ", but don't find anything else.";
+      move badge to room11;
+      " and find a magnetic badge hidden under one of the seats.";
+  ],
+has scenery;
+
+!----------------------------------------
+! Instruments
+!----------------------------------------
+Object "instruments" room11
+with
+  name 'instruments' 'instrumentation' 'complex' 'controls',
+  description
+  [;
+    print "The instrumentation on the Discovery is not very different to the instrumentation on your own spaceship. It's just bigger and more complex.";
+    if (disengage_lever hasnt general)
+      print (string)DISENGAGE_LEVER_ATTRACTS_YOUR_ATTENTION;
+    "";
+  ],
+has scenery;
+
+!----------------------------------------
+! Lever
+!----------------------------------------
+Object disengage_lever "lever" room11
+with
+  name 'disengage' 'lever',
+  description
+  [;
+    print "When another ship is connected to the Discovery, this lever is used to disconnect them if the situation requires it, for example in certain kind of emergencies. Pulling the lever initiates the automatic sequence that separates the two ships until they reach a safe distance";
+    if (self hasnt general)
+      ". Since you have no way to go back to your ship via the tunnel, it might be wise to pull it.";
+    else
+      ", as you can see after pulling it.";
+  ],
+  before
+  [;
+    Pull:
+      if (self has general)
+        "You've already pulled the lever and initiated the sequence for automatic disengagement. There's no need to pull it again.";
+      give self general;
+      "As soon as you pull the lever the automatic disengaging sequence is initiated. With a hiss, the tunnel disconnects from the Discovery, and the distance between the two ships starts increasing steadily.";
+    Push:
+      "It can only be pulled.";
+  ],
+has scenery;
+
+!----------------------------------------
+! Seats
+!----------------------------------------
+Object "seats" room11
+with
+  name 'seats',
+  description
+  [;
+    print "They're very comfortable and they need to be, considering the long hours of duty that a space pilot performs.";
+    if (badge in nothing)
+      print " Sometimes, they're so comfortable that you fall asleep and things fall out of your hands or pockets and end up underneath the seat.";
+    print " ";
+    <<Search self>>;
+  ],
+  before
+  [;
+    Enter:
+      if (verb_word == 'lie')
+        "The seat isn't long enough to lie on.";
+      if (verb_word == 'stand')
+        "The seat is for sitting on, not standing on.";
+      "You don't have time to sit around.";
+    LookUnder:
+      print "You look under the seats";
+      if (badge notin nothing)
+        ", but don't find anything else.";
+      move badge to room11;
+      " and find a magnetic badge hidden under one of the seats.";
+    Take:
+      "The seats are securely bolted to the floor of the cockpit.";
+  ],
+has pluralname scenery supporter;
+
+!----------------------------------------
+! Magnetic badge
+!----------------------------------------
+Object badge "magnetic badge"
+class Important
+with
+  name 'magnetic' 'badge',
+  description
+  [;
+    print "It's a magnetic badge you found under one of the pilots' seats. It's difficult to say if it was hidden on purpose, or it just accidentally fell. There's something written on it";
+    if (self hasnt general)
+      print " that could be useful";
+    ".";
+  ],
+  before
+  [;
+    Read:
+      if (self notin player)
+        print_ret (string)CANT_READ_FROM_DISTANCE;
+      give badge general;
+      "It says, 'Armoury'.";
+  ],
+has clothing;
+
+!========================================
+! Room 12: Sick Bay
+!========================================
+Object room12 "Sick Bay"
+with
+  description "The Discovery's sick bay is in turmoil. Surely this disorder is the result of the state of emergency in which the crew of the spaceship found themselves. The only exit is west.",
+  w_to
+  [;
+    if (corpse12 hasnt general)
+      StopDaemon(corpse12);
+    return room05;
+  ],
+has;
+
+!----------------------------------------
+! Sick bay
+!----------------------------------------
+Object "sick bay" room12
+with
+  name 'sick' 'bay' 'infirmary',
+  description "It's the ship's infirmary. It's small, but equipped with everything needed to cure a patient during the long journeys in space.",
+has scenery;
+
+!----------------------------------------
+! Man's body
+!----------------------------------------
+Object corpse12 "man's body" room12
+class Body
+with
+  name 'man' 'man^s' 'body' 'corpse' 'doctor',
+  description
+  [;
+    print "The man, probably a doctor", (string)IS_CRUMPLED;
+    if (self hasnt general)
+      print_ret (string)COVERED_WITH_SORES;
+    else
+      print_ret (string)NOW_CHARRED;
+  ],
+has animate;
+
+!----------------------------------------
+! Pair of protective gloves
+!----------------------------------------
+Object gloves "protective gloves" room12
+with
+  article "a pair of",
+  name 'pair' 'of' 'protective' 'gloves',
+  description "It's a pair of gloves used to safely handle dangerous materials, like poisonous or corrosive substances. They are big enough to be worn over your space suit.",
+  before
+  [;
+    Take:
+      if (corpse12 hasnt general)
+        print_ret (string)DEAL_WITH_CORPSE_FIRST;
+  ],
+has clothing pluralname;
+
+!----------------------------------------
+! Bottle of acid
+!----------------------------------------
+Object acid "bottle of acid" room12
+with
+  name 'small' 'brown' 'glass' 'bottle' 'of' 'liquid' 'acid',
+  description "It's a small brown glass bottle. You can tell from the label that it contains a highly-corrosive acid, but there isn't much left.",
+  before
+  [;
+    Drink, Taste:
+      deadflag = 1;
+      "Are you mad? You just drank the highly-corrosive acid. It burns your throat and starts to eat away at your innards. You gag and splutter and clutch at your throat, but the damage is done.";
+    EmptyT, PutOn:
+      if (second == player)
+      {
+        deadflag = 1;
+        "Are you mad? The acid sizzles your skin and burns through your flesh down to the bone. You never were the sharpest tool in the shed and this just proves it.";
+      }
+      if (second ~= shockproof_container or lock)
+        "You can't pour the acid on that.";
+      print "You open the bottle carefully to avoid splashing yourself with the acid, then pour it over the lock. The explosive reaction spits drops of acid all over your hands";
+      if (gloves hasnt worn)
+      {
+        deadflag = 1;
+        ". Your suit wasn't made to deal with such powerful acid and it starts to melt. The pain is unbearable and you start screaming. In your rush to find some water, you trip and fall, hitting your head very hard. You lose consciousness and slowly die.";
+      }
+      give shockproof_container ~locked open;
+      move bottle to parent(self);
+      move self to limbo;
+      ", but the gloves protect you. In a few minutes, the acid completely dissolves the lock and you cautiously open the container.";
+    Read:
+      <<Read label>>;
+    Smell:
+      "You can't smell anything, but the fumes burn your nose.";
+    Take:
+      if (corpse12 hasnt general)
+        print_ret (string)DEAL_WITH_CORPSE_FIRST;
+    ThrowAt:
+      "Why don't you just pour the acid on ", (the)second, " so that you don't miss?";
+  ],
+  add_to_scope label,
+has;
+
+!----------------------------------------
+! Label
+!----------------------------------------
+Object label "label"
+with
+  name 'instructions' 'label' 'warning' 'hazards' 'risks',
+  description
+  [;
+    print "The label alerts users to the potential hazards and risks of using acid.";
+    if (self hasnt general)
+      print " It wouldn't hurt to read it to see what it says.";
+    "";
+  ],
+  before
+  [;
+    Read:
+      give self general;
+      "Among all the technical gobbledegook, the label says, 'Wear protective gear before using acid'.";
+  ],
+has scenery;
+
+!----------------------------------------
+! Empty bottle
+!----------------------------------------
+Object bottle "empty bottle"
+with
+  name 'small' 'brown' 'glass' 'empty' 'bottle',
+  article AN,
+  description "It's a small brown glass bottle. You can tell from the label that it used to contain a highly-corrosive acid, but it's now empty.",
+  before
+  [;
+    EmptyT:
+      "There's no acid left in the bottle.";
+    Receive:
+      "You can only put liquids in the empty bottle.";
+  ],
+  add_to_scope label,
+has;
+
+!========================================
+! Room 13: Storeroom
+!========================================
+Object room13 "Storeroom"
+with
+  description "The large room you've entered looks like a storeroom, but it's rather empty. Once you're done here, you can go back to where you came by going south.",
+  s_to
+  [;
+    if (corpse13 hasnt general)
+      StopDaemon(corpse13);
+    return room05;
+  ],
+has;
+
+!----------------------------------------
+! Storeroom
+!----------------------------------------
+Object "storeroom" room13
+with
+  name 'storeroom',
+  description "It's one of the storerooms present on each deck of the ship. There's nothing special about it.",
+has scenery;
+
+!----------------------------------------
+! Man's body
+!----------------------------------------
+Object corpse13 "man's body" room13
+class Body
+with
+  name 'man' 'man^s' 'body' 'corpse' 'mechanic',
+  description
+  [;
+    print "The man, probably a mechanic", (string)IS_CRUMPLED;
+    if (self hasnt general)
+      print_ret (string)COVERED_WITH_SORES;
+    else
+      print_ret (string)NOW_CHARRED;
+  ],
+has animate;
+
+!----------------------------------------
+! Flash drive
+!----------------------------------------
+Object flash_drive "flash drive" room13
+with
+  name 'flash' 'drive' 'high-density' 'high' 'density' 'storage' 'device',
+  description
+  [;
+    print "It's a high-density storage device used for recording data so that it can be transferred between computers.";
+    if (self has general)
+      print " It now contains the data concerning the alien pathogen. If you take the data to Earth, they might be able to find a cure for it.";
+    "";
+  ],
+  before
+  [;
+    Read:
+      "You can't read what's on it unless you plug it into a computer.";
+    Take:
+      if (corpse13 hasnt general)
+        print_ret (string)DEAL_WITH_CORPSE_FIRST;
+  ],
+has;
+
+!========================================
+! Room 14: Recreation Room
+!========================================
+Object room14 "Recreation Room"
+with
+  description "This is the recreation room of the Discovery. You can see some sofas and gaming tables. The only exit lies to the east.",
+  e_to room05,
+has light;
+
+!----------------------------------------
+! Recreation room
+!----------------------------------------
+Object "recreation room" room14
+with
+  name 'recreation' 'room',
+  description "This room was probably used between shifts by the medics that worked in this part of the ship.",
+has scenery;
+
+!----------------------------------------
+! Sofas
+!----------------------------------------
+Object "sofas" room14
+with
+  name 'sofas',
+  description
+  [;
+    print "The sofas look very comfy. You guess they needed to be made that way to provide some comfort during the long periods away from home. ";
+    <<Search self>>;
+  ],
+  before
+  [;
+    Enter:
+      if (verb_word == 'sit')
+        "You sit on one the sofas to try it. Yep, it sure is comfy, but you have no time to waste sitting around on a sofa, so you stand up again.";
+      if (verb_word == 'stand')
+        "The sofas might be all messed up, but that doesn't mean you can stand on them and mess them up even more.";
+      <<Sleep>>;
+    ],
+has enterable pluralname scenery supporter;
+
+!----------------------------------------
+! Gaming tables
+!----------------------------------------
+Object gaming_tables "gaming tables" room14
+with
+  name 'gaming' 'tables',
+  description
+  [;
+    print "The gaming tables are a perfect match for the sofas. They look brand new. ";
+    <<Search self>>;
+  ],
+has pluralname scenery supporter;
+
+!----------------------------------------
+! Board game
+!----------------------------------------
+Object "board game" gaming_tables
+with
+  name 'board' 'game',
+  description "This board game refers to dungeons, dragons and a plethora of weird characters who roam forested lands in search of treasure. Clearly, the Discovery's crew was fed up with the emptiness of space and sought escape in a fantasy world.",
+  before
+  [;
+    Play:
+      "You spend a couple of minutes fiddling with the game. Then remember that you've got work to do, so you leave it for later.";
+    Take:
+      "I agree that it's a nice game, but you don't have time for playing.";
+  ],
+has static;
+
+!========================================
+! Room 15: Laboratory
+!========================================
+Object room15 "Laboratory"
+with
+  description "You're in the Discovery's laboratory. It's a room that houses all the results of the research carried out by scientists on their journey to unknown worlds. Some cabinets placed against the walls contain numerous test tubes and capsules of special material. One cabinet with a stained glass cover draws your attention. The only exit is north.",
+  n_to room05,
+has light;
+
+!----------------------------------------
+! Laboratory
+!----------------------------------------
+Object "laboratory" room15
+with
+  name 'laboratory' 'lab' 'place' 'mess',
+  description "Something must have happened here, since the place is a mess.",
+has scenery;
+
+!----------------------------------------
+! Cabinets
+!----------------------------------------
+Object cabinets "cabinets" room15
+with
+  name 'metal' 'cabinets',
+  description
+  [;
+    print "They're metal cabinets. ";
+    <<Search self>>;
+  ],
+  before
+  [;
+    Receive:
+      "Leave them alone.";
+  ],
+has container open pluralname static;
+
+!----------------------------------------
+! Test tubes and capsules
+!----------------------------------------
+Object "test tubes and capsules" cabinets
+with
+  name 'test' 'tubes' 'capsules',
+  description "There are too many of them and you don't know which ones are of any use.",
+  before
+  [;
+    Remove, Take:
+      "You don't need any of them.";
+  ],
+has pluralname static;
+
+!----------------------------------------
+! Glass cabinet
+!----------------------------------------
+Object cabinet "stained-glass cabinet" room15
+with
+  name 'stained-glass' 'stained' 'glass' 'cabinet',
+  description
+  [;
+    print "This cabinet is set apart from the others. ";
+    <<Search self>>;
+  ],
+has container openable static;
+
+!----------------------------------------
+! Vial
+!----------------------------------------
+Object vial "vial" cabinet
+with
+  name 'vial' 'filled' 'with' 'blue' 'liquid',
+  description
+  [;
+    print "The vial is filled with blue liquid";
+    if (flash_drive hasnt general)
+      ", but you have no idea what it is.";
+    else
+      ". Now that you've read the data while transfering it to the flash drive, you think the blue liquid might be the vaccine to the plague. You'd better keep it safe and take it with you back to Earth.";
+  ],
+  before
+  [;
+    Drink:
+      print "You'd better not";
+      if (flash_drive hasnt general)
+        ", as you don't know what it is.";
+      else
+        ". It's the only sample and someone on Earth may need it to produce more.";
+    Open:
+      print "You'd better not, as you don't ";
+      if (flash_drive hasnt general)
+        "know what it is.";
+      else
+        "want to risk spilling it.";
+  ],
+has;
+
+!========================================
+! Room 16: Lower Deck Corridor
+!========================================
+Object room16 "Lower Deck Corridor"
+with
+  description "You're in the corridor of the lower deck of the Discovery. Like on every deck, this one is like a hub with exits in every direction. The southern exit has a door with a placard on it. You can also go up.",
+  n_to room17,
+  s_to armoury_door,
+  e_to room20,
+  w_to
+  [;
+    if (corpse18 hasnt general)
+    {
+      corpse18.time_left = 0;
+      StartDaemon(corpse18);
+    }
+    return room18;
+  ],
+  u_to room03,
+  before
+  [;
+    Hint:
+      print_ret (string)VENT_ATM;
+  ],
+has light;
+
+!----------------------------------------
+! Corridor
+!----------------------------------------
+Object "corridor" room16
+with
+  name 'lower' 'deck' 'corridor',
+  description "It's like a central hub that connects the rooms on this deck and allows access to the deck above.",
+has scenery;
+
+!----------------------------------------
+! Armoury door (floating object)
+!----------------------------------------
+Object armoury_door "armoury door"
+with
+  name 'armoury' 'armory' 'door',
+  description
+  [;
+    print "It's the door to the armoury. It's currently ";
+    if (self has open)
+      "open.";
+    else
+      "closed.";
+  ],
+  door_dir
+  [;
+    if (self in room16)
+      return s_to;
+    else
+      return n_to;
+  ],
+  door_to
+  [;
+    if (self in room16)
+      return room22;
+    else
+      return room16;
+  ],
+  with_key badge,
+  found_in room16 room22,
+has door openable lockable locked scenery;
+
+!----------------------------------------
+! Placard
+!----------------------------------------
+Object "placard" room16
+with
+  name 'placard',
+  description "The placard reads, 'Armoury'.",
+  before
+  [;
+    Read:
+      <<Examine self>>;
+  ],
+has scenery;
+
+!----------------------------------------
+! Valve
+!----------------------------------------
+Object valve16 "valve" room16
+class Valve
+has static;
+
+!----------------------------------------
+! Lever
+!----------------------------------------
+Object lever16 "lever" room16
+class Lever
+has static;
+
+!========================================
+! Room 17: Storeroom
+!========================================
+Object room17 "Storeroom"
+with
+  description "You've entered a storeroom. The temperature is very low as this particular storeroom probably served as cold storage for foodstuffs. Yet, the supplies have been removed to make way for something else. The only exit is to the south.",
+  s_to room16,
+has light;
+
+!----------------------------------------
+! Storeroom
+!----------------------------------------
+Object "storeroom" room17
+with
+  name 'storeroom' 'room',
+  description "It's one of the storerooms present on each deck of the ship. The temperature here is very low, possibly to prevent the block of ice from melting.",
+has scenery;
+
+!----------------------------------------
+! Block of ice
+!----------------------------------------
+Object "block of ice" room17
+with
+  name 'block' 'of' 'ice',
+  initial "A huge block of ice dominates the room.",
+  description "The low temperature of the room seems to prevent the ice from melting. The translucency of the ice allows you to see that there's something horrible locked inside it. It reminds you of an old movie where a UFO crashed at the North Pole. The UFO's only occupant was frozen in a block of ice, so the scientists melted it, but things didn't end very well.",
+  before
+  [;
+    Attack, Burn, Open, Search, Shoot:
+      "You'd better not. Whatever is inside, it seems hibernated and harmless. You don't know what you could unleash by exposing it to the ambient temperature of the spaceship.";
+    Eat:
+      "Really?";
+    Pull, Push:
+      "It's very heavy. There would be no point in moving it somewhere else.";
+    Touch:
+      "As you're wearing the suit you can't actually feel the cold, but a shiver runs down your spine.";
+  ],
+has static;
+
+!========================================
+! Room 18: Mess Hall
+!========================================
+Object room18 "Mess Hall"
+with
+  description "The starship's mess hall is deserted, as no one is sitting at the tables. From here you can proceed east or south.",
+  s_to
+  [;
+    if (corpse18 hasnt general)
+      "You can't get past the corpses while they're infectious.";
+    return room19;
+  ],
+  e_to
+  [;
+    if (corpse18 hasnt general)
+      StopDaemon(corpse18);
+    return room16;
+  ],
+has light;
+
+!----------------------------------------
+! Mess hall
+!----------------------------------------
+Object "mess hall" room18
+with
+  name 'mess' 'hall',
+  description "This is no doubt one of the places where the crew members gathered, but it's deserted now.",
+has scenery;
+
+!----------------------------------------
+! Tables and chairs
+!----------------------------------------
+Object "tables and chairs" room18
+with
+  name 'furniture' 'tables' 'chairs',
+  description "The tables and chairs are standard features for a mess hall like this, but there's nothing special about them so don't bother about them.",
+has scenery;
+
+!----------------------------------------
+! Men's bodies
+!----------------------------------------
+Object corpse18 "men's bodies" room18
+class Body
+with
+  name 'men' 'men^s' 'bodies' 'corpses' 'scientists',
+  description
+  [;
+    print "A few men, probably scientists during their meal break", (string)ARE_CRUMPLED;
+    if (self hasnt general)
+      print_ret (string)COVERED_WITH_SORES;
+    else
+      print_ret (string)NOW_CHARRED;
+  ],
+has animate pluralname;
+
+!----------------------------------------
+! Electronic key
+!----------------------------------------
+Object electronic_key "electronic key" room18
+class Important
+with
+  article AN,
+  name 'electronic' 'key',
+  description
+  [;
+    print "It's an electronic key, shaped like a card. It seems to be one of those cards used to give access to important places. There's something written on it";
+    if (self hasnt general)
+      print " that could be useful";
+    ".";
+  ],
+  before
+  [;
+    Read:
+      if (self notin player)
+        print_ret (string)CANT_READ_FROM_DISTANCE;
+      give self general;
+      "The writing on the card says, 'Navigation Room'.";
+    Take:
+      if (corpse18 hasnt general)
+        print_ret (string)DEAL_WITH_CORPSES_FIRST;
+  ],
+has;
+
+!========================================
+! Room 19: Kitchen
+!========================================
+Object room19 "Kitchen"
+with
+  description
+  [;
+    print "The kitchen, a small room directly connected to the north with the mess room, is also empty. ";
+    if (helmet has worn)
+      print "If you weren't wearing your helmet, you'd probably smell a faint odour of synthetic foods pervading the air.";
+    else
+      print "A faint smell of synthetic foods pervades the air, giving the impression that nothing has happened on board the Discovery in the last few days, or certainly the last few hours.";
+    " When you're done here, you can go back to the mess hall by going north.";
+  ],
+  n_to room18,
+  before
+  [;
+    Smell:
+      if (helmet has worn)
+        "If you weren't wearing your helmet, you'd probably smell a faint odour of synthetic foods pervading the air.";
+      else
+        "A faint smell of synthetic foods pervades the air, but you don't feel like eating at the moment.";
+  ],
+has light;
+
+!----------------------------------------
+! Kitchen
+!----------------------------------------
+Object "kitchen" room19
+with
+  name 'kitchen',
+  description "They call it a 'kitchen', but it's no more than a place where food is 3D printed from basic ingredients.",
+has scenery;
+
+!========================================
+! Room 20: Officers' Lounge
+!========================================
+Object room20 "Officers' Lounge"
+with
+  description "The officers' lounge is a small room where officers gather to discuss the outcome of operations and decide the next moves to take. Sofas and low coffee tables are lined against the walls. There are exits to the south and west.",
+  s_to
+  [;
+    if (corpse21 hasnt general)
+    {
+      corpse21.time_left = 0;
+      StartDaemon(corpse21);
+    }
+    return room21;
+  ],
+  w_to room16,
+has light;
+
+!----------------------------------------
+! Officers' lounge
+!----------------------------------------
+Object "officers' lounge" room20
+with
+  name 'officers^' 'lounge',
+  description "The lounge is deserted.",
+has scenery;
+
+!----------------------------------------
+! Sofas
+!----------------------------------------
+Object "sofas" room20
+with
+  name 'sofas',
+  description
+  [;
+    print "The sofas look very comfy. You guess they needed to be made that way to provide some comfort during the long periods away from home. ";
+    <<Search self>>;
+  ],
+  before
+  [;
+    Enter:
+      if (verb_word == 'sit')
+        "You sit on one the sofas to try it. Yep, it sure is comfy, but you have no time to waste sitting around on a sofa, so you stand up again.";
+      if (verb_word == 'stand')
+        "The sofas might be messed up, but that doesn't mean you can stand on them in your shoes.";
+      <<Sleep>>;
+    ],
+has enterable pluralname scenery supporter;
+
+!----------------------------------------
+! Coffee tables
+!----------------------------------------
+Object coffee_table "coffee tables" room20
+with
+  name 'low' 'coffee' 'tables',
+  description
+  [;
+    print "The low coffee tables are made of old synthetic material. They're scratched and worn, and there's nothing special about them. ";
+    <<Search self>>;
+  ],
+has pluralname scenery supporter;
+
+!----------------------------------------
+! Scratches
+!----------------------------------------
+Object "scratches" coffee_table
+with
+  name 'scratches',
+  description "The scratches look fairly deep, as though they've been made by an animal. Stuck in one of them you can see what appears to be a broken human nail.",
+has pluralname static;
+
+!----------------------------------------
+! Broken human nail
+!----------------------------------------
+Object "broken nail" coffee_table
+with
+  name 'broken' 'human' 'finger' 'nail',
+  description "It looks like a broken human finger nail. The owner of that nail must have totally lost his mind to cause himself such a torment.",
+  before
+  [;
+    Take:
+      "OOh, gross! No, thank you!";
+  ],
+has static;
+
+!========================================
+! Room 21: Strategic Meeting Room
+!========================================
+Object room21 "Strategic Meeting Room"
+with
+  description "The room you're in now is intended for strategic meetings of high-ranking personnel. A large table and some chairs are all the furniture in the room. On one of the walls stands a whiteboard with some writing on it. The only exit is to the north.",
+  n_to
+  [;
+    if (corpse21 hasnt general)
+      StopDaemon(corpse21);
+    return room20;
+  ],
+has light;
+
+!----------------------------------------
+! Strategic meeting room
+!----------------------------------------
+Object "strategic meeting room" room21
+with
+  name 'strategic' 'meeting' 'room',
+  description "It looks like something important was going on here.",
+has scenery;
+
+!----------------------------------------
+! Furniture
+!----------------------------------------
+Object "furniture" room21
+with
+  name 'furniture' 'large' 'table' 'chairs',
+  description "The most prominent feature is a big table with chairs, but there's nothing special about them so don't bother.",
+has scenery;
+
+!----------------------------------------
+! Whiteboard
+!----------------------------------------
+Object whiteboard "whiteboard" room21
+class Important
+with
+  name 'whiteboard' 'white' 'board',
+  description
+  [;
+    print "The whiteboard is the only feature on the walls. There's some writing on it";
+    if (self hasnt general)
+      print " that you haven't read yet";
+    ".";
+  ],
+  before
+  [;
+    Read:
+      give self general;
+      "Despite the shaky handwriting, likely due to haste or the progression of the disease, you can make out what's written. It seems that the crew, having inadvertently brought a pathogen aboard while exploring the Guyoth system, attempted to find a cure for the disease, but was unsuccessful. As the research showed an increased and uncontrollable acceleration in the pathogen's evolution, a course was plotted toward the Sun in a last-ditch effort to prevent the disease from reaching Earth.^^Evidently, the progression of the disease had destroyed the crew's mental faculties, as their calculations appear to be flawed. It seems the only solution now is to destroy the ship, since the pathogen's infection and mortality rate seems to be 100%.";
+  ],
+has scenery;
+
+!----------------------------------------
+! Walls
+!----------------------------------------
+Object "walls" room21
+with
+  name 'wall' 'walls',
+  description "There's a whiteboard mounted on the wall opposite the exit.",
+  before
+  [;
+    Read:
+      "Try the whiteboard.";
+  ],
+has scenery;
+
+!----------------------------------------
+! Writing
+!----------------------------------------
+Object "writing" room21
+with
+  name 'writing',
+  description
+  [;
+    print "It looks like it was written during an emergency meeting.";
+    if (whiteboard hasnt general)
+      print " You should read it.";
+    "";
+  ],
+  before
+  [;
+    Read:
+      <<Read whiteboard>>;
+  ],
+has scenery;
+
+!----------------------------------------
+! Men's bodies
+!----------------------------------------
+Object corpse21 "men's bodies" room21
+class Body
+with
+  name 'men' 'men^s' 'bodies' 'corpses',
+  description
+  [;
+    print "A few men, probably senior members of the expedition gathered for an important meeting", (string)ARE_CRUMPLED;
+    if (self hasnt general)
+      print_ret (string)COVERED_WITH_SORES;
+    else
+      print_ret (string)NOW_CHARRED;
+  ],
+has animate pluralname;
+
+!----------------------------------------
+! Report
+!----------------------------------------
+Object report "report" room21
+class Important
+with
+  name 'infection' 'report',
+  description
+  [;
+    print "It's a report, containing data about an unknown pathogen.";
+    if (self hasnt general)
+      print " You should read it, even if you think you've already figured out what was going on aboard the ship.";
+    "";
+  ],
+  before
+  [;
+    Read:
+      if (self notin player)
+        print_ret (string)CANT_READ_FROM_DISTANCE;
+      give self general;
+      "'...the pathogen, isolated from samples retrieved on Guyoth IV, is highly infectious and attacks the host destroying the organs from within. The initial symptoms are a marked decline in higher intellectual faculties, skin eruptions with infectious sores and blisters...'^^The report continues with a massive list of disgusting symptoms that you don't really want to read about.";
+    Take:
+      if (corpse21 hasnt general)
+        print_ret (string)DEAL_WITH_CORPSES_FIRST;
+  ],
+has;
+
+!========================================
+! Room 22: Armoury
+!========================================
+Object room22 "Armoury"
+with
+  description "The space in the armoury has been emptied and the shelves removed, probably before departure. This may have been to provide additional storage, given the scientific nature of the expedition. Normally, it would have been equipped with large shelves on which weapons and ammunition of all types were placed. From here you can only go north.",
+  n_to armoury_door,
+  before
+  [;
+    Hint:
+      if (shockproof_container hasnt open)
+        "I remember seeing a movie where metal couldn't withstand acid.";
+  ],
+has light;
+
+!----------------------------------------
+! Armoury
+!----------------------------------------
+Object "armoury" room22
+with
+  name 'armoury' 'armory' 'room',
+  description "The room is mostly empty, apart from the big shockproof container in the centre of the room.",
+has scenery;
+
+!----------------------------------------
+! Shelves, weapons, ammunition
+!----------------------------------------
+Object "shelves" room22
+with
+  name 'shelves' 'weapons' 'ammunition',
+  description "As stated before, the shelves, weapons and ammunition appear to have been removed from this room to increase the storage capacity of the Discovery.",
+has scenery;
+
+!----------------------------------------
+! Laser pistol
+!----------------------------------------
+Object pistol "laser pistol" room22 !item03
+with
+  name 'laser' 'pistol',
+  description "It's a laser pistol. It doesn't look very helpful in your current predicament. In retrospect, you wonder whether you could have used it on the security droids.",
+has;
+
+!----------------------------------------
+! Shockproof container
+!----------------------------------------
+Object shockproof_container "shockproof container" room22
+with
+  name 'shockproof' 'container',
+  description
+  [;
+    print "It's a huge shockproof container. ";
+    if (self hasnt open)
+      "The big lock on it keeps it safely closed. Given how sturdy it is, it must hold something very important...or very dangerous.";
+    print "Now that you've burned the lock with the acid, the container is open. ";
+    <<Search self>>;
+  ],
+  before
+  [;
+    Close:
+      if (self has locked)
+        "It's already closed.";
+      else
+        "You can't, as the lock's been melted.";
+    Lock:
+      if (self has locked)
+        "It's already locked.";
+      else
+        "You just melted the lock, so you won't be able to lock it again.";
+    Open:
+      if (self has open)
+        "It's already open.";
+      else
+        "You'll have to get past the lock first.";
+    Shoot:
+      "I don't think it's a smart move shooting inside an armoury.";
+    Take:
+      "You don't need the container, only what it contains.";
+    Unlock:
+      if (self hasnt locked)
+        "It's already unlocked.";
+      print "The big lock requires a special key";
+      if (note hasnt general)
+        ". Given the mess you've seen so far, it might have been lost.";
+      else
+        ", but, as you know from the captain's note, he's destroyed it.";
+  ],
+has container locked openable static;
+
+!----------------------------------------
+! Big lock
+!----------------------------------------
+Object lock "big lock" room22
+with
+  name 'big' 'lock',
+  description
+  [;
+    print "It's quite an impressive lock. ";
+    if (shockproof_container hasnt open)
+      "How are you going to unlock it without a key?";
+    else
+      "Or it was, until you melted it with the acid. Now it's useless.";
+  ],
+  before
+  [;
+    Close:
+      <<Close shockproof_container>>;
+    Lock:
+      <<Lock shockproof_container>>;
+    Open:
+      <<Open shockproof_container>>;
+    Shoot:
+      <<Shoot shockproof_container>>;
+    Unlock:
+      <<Unlock shockproof_container>>;
+  ],
+has scenery;
+
+!----------------------------------------
+! Explosive
+!----------------------------------------
+Object explosive "explosive" shockproof_container
+with
+  article "some",
+  name 'large' 'quantity' 'of' 'high-explosive' 'high' 'explosive',
+  description
+  [;
+    print "It's a large quantity of high-explosive. Judging by the amount, the crew of the Discovery must have also dealt with mineral extraction.";
+    if (detonator in player)
+      print " As you've already got a detonator, you now have all the components you need to make a bomb.";
+    "";
+  ],
+  after
+  [;
+    Take:
+      if (detonator in player)
+        print_ret (string)YOU_NOW_HAVE_PARTS_TO_MAKE_BOMB;
+  ],
+has;
+
+!----------------------------------------
+! Fuel tank
+!----------------------------------------
+Object tank "fuel tank" room22
+with
+  name 'fuel' 'tank',
+  description
+  [;
+    print "It's a fuel tank.";
+    if (self in player)
+    {
+      print " Judging by the weight, it";
+      if (self.number == 3)
+        print "'s full, so you can use it to load a flamethrower.";
+      if ((self.number == 2) || (self.number == 1))
+        print " still has some fuel in it, so you can load the flamethrower.";
+      if (self.number == 0)
+        print "'s empty, but that's not surprising, as you used it to load the flamethrower. As it's now useless, you can discard it.";
+    }
+    "";
+  ],
+  before
+  [;
+    Insert:
+      if (second == flamethrower)
+        <<Load second self>>;
+  ],
+  number 3,
+has;
+
+!========================================
+! Room 23: Navigation Room
+!========================================
+Object room23 "Navigation Room"
+with
+  description "You're in the navigation room of the Discovery where a large mainframe shines with an unreal light. On the screen, a small cursor winks, making the green phosphors shine. A chart on the wall depicts the area of interest for the present mission. When you're done here, you can exit the room via the northern door.",
+  n_to navigation_door,
+has light;
+
+!----------------------------------------
+! Navigation room
+!----------------------------------------
+Object "navigation room" room23
+with
+  name 'navigation' 'room',
+  description "It's not very wide, and the computer inside fills it almost completely.",
+has scenery;
+
+!----------------------------------------
+! Chart
+!----------------------------------------
+Object "chart" room23
+with
+  name 'chart',
+  description "It looks like the scope of this mission was to explore the Guyoth System. Markings on the chart seem to indicate that the Discovery was returning from Guyoth IV, a young Earth-like planet, that's still evolving.",
+has scenery;
+
+!----------------------------------------
+! Video screen
+!----------------------------------------
+Object "screen" room23
+with
+  name 'video' 'screen' 'green' 'phosphors' 'cursor',
+  description "The cursor flashing on the video is mesmerising.",
+  before
+  [;
+    Read:
+      <<Read data>>;
+  ],
+has scenery;
+
+!----------------------------------------
+! Computer
+!----------------------------------------
+Object computer "computer" room23
+class Important
+with
+  name 'computer' 'mainframe',
+  description
+  [;
+    print "The Discovery's on-board computer still works. A slot in it allows you to insert a storage device to transfer data. The last data entry concerns the spaceship's log and contains a lot of scientific information about the pathogen that's attacked the crew. ";
+    if (flash_drive has general)
+      "That information is now backed up on your flash drive.";
+    else
+      "It might be wise to transfer the data to a storage device.";
+  ],
+  before
+  [;
+    Attack:
+      "Although you could do that, there's no need to waste your time in such a useless endeavour.";
+    Read:
+      give self general;
+      <<Read data>>;
+  ],
+has scenery;
+
+!----------------------------------------
+! Slot
+!----------------------------------------
+Object slot23 "slot" room23
+with
+  name 'small' 'slot',
+  description
+  [;
+    print "It's a small slot used to connect storage devices to the computer. When such a device is in the slot, you can transfer data to the computer. ";
+    <<Search self>>;
+  ],
+  before
+  [;
+    Receive:
+      if (noun ~= flash_drive)
+        "You can't fit ", (a)noun, " in the slot.";
+  ],
+has container open static;
+
+!----------------------------------------
+! Data
+!----------------------------------------
+Object data "data" room23
+with
+  name 'data' 'entry' 'log',
+  description
+  [;
+    print "This is highly scientific information, and there's a lot of it. You could never learn it by heart, but ";
+    if (flash_drive hasnt general)
+      "you could transfer it to a dedicated storage device.";
+    else
+      "now you don't have to, as it's safely stored on the flash drive.";
+  ],
+  before
+  [;
+    Transfer:
+      if (flash_drive notin slot23)
+        "You can't transfer data to a storage device unless it's in the appropriate slot.";
+      if (flash_drive has general)
+        "You've already transfered the data. There's no need to do it again.";
+      give flash_drive general;
+      print "You quickly transfer the data to the flash drive. While doing so, you read through the most interesting parts as they appear on the screen.^^";
+      <<Read self>>;
+    Read:
+      "During an exploration mission, the crew landed on an uncharted, and apparently lifeless, planet. While digging its surface to collect soil samples, they found a new organism. Despite all the precautions taken to keep those samples isolated, an infection spread across the ship. In an attempt to counteract the disease, the ambient temperature was lowered to almost zero degrees Celsius. An initial vaccine was developed, but the crew must have died before the tests could be completed. During the development of the vaccine, the droids entered seek-and-destroy mode for some unknown reason. This may have been a malfunction or it may have been the droids' AI trying to defend the ship against all infectious personnel.";
+  ],
+has scenery;
+
+!========================================
+! Room 24: Escape Pod
+!========================================
+Object room24 "Escape Pod"
+with
+  description "You've just entered an escape pod of the Discovery. It's barely big enough to accommodate a single person. In front of you, you can see a small control panel. The only way out is up.",
+  u_to room10,
+has light;
+
+!----------------------------------------
+! Escape pod
+!----------------------------------------
+Object "escape pod" room24
+with
+  name 'escape' 'pod',
+  description "With your spaceship out of reach in the docking bay, this escape pod is your only way out of this nightmare. It's pre-programmed to fly towards Earth on the shortest possible route.",
+has scenery;
+
+!----------------------------------------
+! Control panel
+!----------------------------------------
+Object "control panel" room24
+with
+  name 'control' 'panel' 'instruments',
+  description "The control panel is nothing more than a few instruments to monitor the flight path and a release button to separate it from the Discovery.",
+has scenery;
+
+!----------------------------------------
+! Release button
+!----------------------------------------
+Object "release button" room24
+with
+  name 'release' 'button',
+  description "It's the button that, when pressed, initiates the release sequence from the Discovery. After separation, an automated system sends the pod on a route to Earth.",
+  before
+  [;
+    Push:
+      if (~~TestScope(flash_drive) || flash_drive hasnt general)
+        "You're missing important information that you need to take back to Earth.";
+      if (~~TestScope(vial))
+        "You can't leave without the vaccine.";
+      if (bomb notin room07)
+        "You need to set the bomb to destroy the Discovery.";
+      print "The first thing you hear after pressing the release button is a loud 'BANG'. That makes your heart sink, then you feel a strong acceleration and realise that the bang came from the microcharges that separate the escape pod from the Discovery.^^Looking outside the porthole, you see the Discovery becoming smaller and then it explodes. You have to look away, as the explosion is as bright as a small sun.^^Next to the explosion, ";
+      if (disengage_lever has general)
+      {
+        deadflag = 2;
+        print "but now at a safe distance, you see your spaceship. You'll think about how to retrieve it in due course.";
+      }
+      else
+      {
+        deadflag = 3;
+        print "you see that your spaceship is still connected by the pressurised tunnel and it too is caught in the explosion. You're going to have a problem explaining this to his boss.";
+      }
+      "^^You have possibly prevented a contagion and, even though the pathogen might have infected you, the vial and the data that you now have on the flash drive should be enough to develop a vaccine.^^As the light from the burning Discovery fades away, you take a moment to study the control panel in the escape pod. Everything seems to be working correctly - the course towards Earth is set, the emergency beacon is transmitting your position and the flow of oxygen is steady. You also find some emergency rations below the seat. You tear a snack bag open, relax and wait for the Search and Rescue Unit to arrive.";
+  ],
+has scenery;
+
+!========================================
+! Limbo
+!========================================
+Object limbo;
+
+!========================================
+! Printing rules
+!========================================
+[ consultWord word i;
+  for (i=0:i<WordLength(word):i++)
+    print (char)LowerCase(WordAddress(word)->i);
+];
+
+[ firstConsultWord word i;
+  for (i=0:i<WordLength(word):i++)
+    if (i == 0)
+      print (char)UpperCase(WordAddress(word)->i);
+    else
+      print (char)LowerCase(WordAddress(word)->i);
+];
+
+!========================================
+! Other routines
+!========================================
+[ _UpdateDarkness p_silent _ceil _old_darkness _darkness;
+  if (location == thedark)
+    _old_darkness = true;
+  _ceil = ScopeCeiling(player);
+  if (_LookForLightInObj(_ceil, _ceil) == false)
+    _darkness = true;
+  if (_darkness ~= _old_darkness)
+    scope_modified = true;
+  if (_darkness)
+    location = thedark;
+  else
+    location = real_location;
+  if (_darkness ~= _old_darkness && p_silent == false)
+  {
+    new_line;
+    <Look>;
+  }
+];
+
+[ CantBeShot;
+  if (noun == player)
+    "Are you feeling suicidal?";
+  if (noun == gas)
+    "You can't shoot the gas directly.";
+  if (second == nothing && flamethrower in player)
+  {
+    print "(with the flamethrower)^";
+    second = flamethrower;
+  }
+  rfalse;
+];
+
+[ LowerCase c; ! for ZSCII matching ISO 8859-1
+  switch (c)
+  {
+    'A' to 'Z': c = c + 32;
+    202, 204, 212, 214, 221: c--;
+    217, 218: c = c - 2;
+    158 to 160, 167, 168, 208 to 210: c = c - 3;
+    186 to 190, 196 to 200: c = c - 5 ;
+    175 to 180: c = c - 6;
+  }
+  return c;
+];
+
+[ UpperCase c; ! for ZSCII matching ISO 8859-1
+  switch (c)
+  {
+    'a' to 'z': c = c - 32;
+    201, 203, 211, 213, 220: c++;
+    215, 216: c = c + 2;
+    155 to 157, 164, 165, 205 to 207: c = c + 3;
+    181 to 185, 191 to 195: c = c + 5 ;
+    169 to 174: c = c + 6;
+  }
+  return c;
+];
+
+!========================================
+! Grammar
+!========================================
+[ isMakeable;
+  if (scope_stage == 1)
+    rfalse;!Don't allow multiple objects
+  if (scope_stage == 2)
+  {
+    PlaceInScope(bomb);
+    rfalse;
+  }
+  if (scope_stage == 3)
+    "You don't know how to make that.";
+];
+
+Extend 'ask'
+  * 'about' topic -> AskAbout;
+
+Extend 'lock' first
+  * noun -> Lock;
+
+Extend 'look'
+  * 'into' noun -> Search
+  * 'behind'/'under' noun -> LookUnder;
+
+Extend 'read' first
+  * noun -> Read;
+
+Extend only 'say' first
+  * topic -> Say;
+
+Extend only 'speak' replace
+  * -> Talk
+  * creature -> Talk
+  * noun -> Talk
+  * 'to'/'with' creature -> Talk
+  * 'to'/'with' noun -> Talk
+  * 'to'/'with' creature 'about' topic -> Ask
+  * 'to'/'with' noun 'about' topic -> Ask;
+
+Extend 'unlock' first
+  * noun -> Unlock;
+
+Verb meta 'about' 'info'
+  * -> About;
+
+Verb meta 'credits'
+  * -> Credits;
+
+Verb meta 'help' 'instructions'
+  * -> Help;
+
+Verb 'copy' 'write' = 'transfer';
+
+Verb 'hint' 'clue'
+  * -> Hint;
+
+Verb 'inspect' = 'examine';
+
+Verb 'load'
+  * noun -> Load
+  * noun 'with' held -> Load;
+
+Verb 'make'
+  * scope=isMakeable -> Make
+  * scope=isMakeable 'with' held -> Make;
+
+Verb 'play'
+  * -> Play
+  * noun -> Play
+  * 'with' noun -> Play;
+
+Verb 'pour' = 'empty';
+
+Verb 'shoot'
+  * -> Shoot
+  * held -> Shoot
+  * 'with' held -> Shoot
+  * noun -> Shoot
+  * noun 'with' held -> Shoot
+  * 'at' noun -> Shoot
+  * 'at' noun 'with' held -> Shoot
+  * held 'at' noun -> Shoot reverse;
+
+Verb 'talk' 'babble' 'chat' 'communicate' 'converse' 'gab' 'gossip'
+  * -> Talk
+  * creature -> Talk
+  * noun -> Talk
+  * 'to'/'with' creature -> Talk
+  * 'to'/'with' noun -> Talk
+  * 'to'/'with' creature 'about' topic -> Ask
+  * 'to'/'with' noun 'about' topic -> Ask;
+
+Verb 'use'
+  * noun -> Use;
+
+Verb 'xyzzy' 'plover' 'plugh' 'yoho'
+  * -> MagicWord;
+
+!========================================
+! Actions
+!========================================
+[ AboutSub;
+  print "This game is an adaptation of the Italian adventure 'Morgan Tyler: Star Plague' by Bonaventura Di Bello. It was originally written using The Quill and Illustrator and published by Edizioni Hobby S.r.l. on the cover tape of 'Viking', no. 4, April 1987 for the ZX Spectrum and Commodore 64.^^The data was extracted from the C64 version using UnQuill, translated to English and rewritten for a modern audience with the original author's permission. The new version includes many enhancements that weren't in the original. The coding was done using Inform 6 and the PunyInform library.^^";
+  <<Credits>>;
+];
+
+[ AskAboutSub x count npc;
+  objectloop (x in location && x has animate && x ~= player)
+  {
+    count++;
+    npc = x;
+  }
+  if (count == 0)
+    "There's no one here to answer your questions.";
+  if (count == 1)
+    <<Ask npc noun>>;
+  "As there are multiple characters here, you'll have to specify who to ask, e.g. ASK MAN ABOUT DOG.";
+];
+
+[ CreditsSub;
+  "Original concept, game design and coding by Bonaventura Di Bello.^Technical assistance by Max Di Bello.^English translation and game skeleton by Garry Francis.^Game redesign and coding by Gianluca Girelli.^Play testing by Andrew Schultz, Charles Moore, Garry Francis, Jade, Pablo Martinez and Robert Eggleston.";
+];
+
+!Delete GoSub if diagonal directions are used
+[ GoSub _prop;
+  if (selected_direction == ne_to or nw_to or se_to or sw_to)
+    "There are no diagonal directions in this game.";
+  _prop = selected_direction;
+#Iftrue RUNTIME_ERRORS > RTE_MINIMUM;
+  if (_prop == 0)
+    return _RunTimeError(ERR_INVALID_DIR_PROP);
+#Endif;
+  return GoDir(_prop);
+];
+
+[ HelpSub;
+  "Tell me what to do using simple commands starting with a verb.^^Use LOOK (or L) to refresh the location description. Identify all the objects in the description and EXAMINE (or X) each one. Read responses carefully for hints.^^Use compass directions (N, S, E, W, U and D) to move around. Draw a map as you go.^^Use GET or TAKE to take objects and DROP to drop them again. Use WEAR to wear things like clothing and REMOVE to remove anything that's currently worn. Use INVENTORY (or I) to see what you're carrying and wearing.^^Use AGAIN (or G) to repeat the last command.^^Use UNDO to undo the last command if you make a mistake.^^Use SAVE to save the game and RESTORE to restore it again.^^There are over 100 verbs that you can use, so if something doesn't work, try a different verb or a different way of doing things. Use HINT if you get stuck.^^For full instructions, see the game page at <https://bdb-project.itch.io/plague-on-the-discovery>.";
+];
+
+[ HintSub;
+  "Examine everything you find and draw a map.";
+];
+
+[ LoadSub;
+  if (ObjectIsUntouchable(noun))
+    rtrue;
+  "That would be a neat trick.";
+];
+
+[ LockSub k;
+  if (ObjectIsUntouchable(noun))
+    rtrue;
+  if (noun hasnt lockable)
+  {
+    PrintMsg(MSG_LOCK_NOT_A_LOCK, 'lock');
+    rtrue;
+  }
+  if (noun has locked)
+  {
+    PrintMsg(MSG_LOCK_ALREADY_LOCKED);
+    rtrue;
+  }
+  if (noun has open)
+  {
+    PrintMsg(MSG_LOCK_CLOSE_FIRST);
+    rtrue;
+  }
+  k = RunRoutines(noun, with_key);
+  if (k == nothing)
+    "You can't see how to lock ", (ItOrThem)noun, ".";
+  if (second == nothing && k ~= nothing && k in player)
+  {
+    second = k;
+    print "(with ", (the)second, ")^";
+  }
+  if (second == nothing)
+    "You don't have the key.";
+  if (second ~= k)
+  {
+    PrintMsg(MSG_LOCK_KEY_DOESNT_FIT);
+    rtrue;
+  }
+  give noun locked;
+  run_after_routines_msg = MSG_LOCK_DEFAULT;
+  run_after_routines_arg_1 = 'lock';
+];
+
+[ LookUnderSub;
+  if (location == thedark)
+    "But it's dark.";
+  "You find nothing of interest.";
+];
+
+[ MagicWordSub;
+  "You start chanting the magic word, but soon stop when you realise that instead of help or inspiration you just get horrible visions of dying planets.";
+];
+
+[ MakeSub;
+  "You don't have the materials required to make ", (ThatOrThose)noun, ".";
+];
+
+[ PlaySub;
+  if (noun == nothing)
+    "What do you want to play with?";
+  if (ObjectIsUntouchable(noun))
+    rtrue;
+  "This is no time to be playing around with ", (the)noun, ".";
+];
+
+[ ReadSub;
+  if (ObjectIsUntouchable(noun))
+    rtrue;
+  "There's nothing legible on ", (ThatOrThose)noun, ".";
+];
+
+[ SaySub i;
+  if (consult_words == 0)
+    "You have nothing to say.";
+  print "~";
+  i = consult_from;
+  print (firstConsultWord)i++;
+  while (i < consult_from + consult_words)
+    print " ", (consultWord)i++;
+  print ".~^^";
+  wn = consult_from;
+  if (consult_words == 1 && NextWord() == 'xyzzy' or 'plover' or 'plugh' or 'yoho')
+    <<MagicWord>>;
+  if (AfterRoutines())
+    rtrue;
+  "Nothing happens.";
+];
+
+[ ShootSub;
+  if (noun == nothing)
+    "You point your finger in the air and say, ~Bang!~";
+  if (ObjectIsUntouchable(noun))
+    rtrue;
+  if (CantBeShot())
+    rtrue;
+  "You can't just go around shooting things arbitrarily.";
+];
+
+[ TalkSub;
+  if (noun == nothing)
+    "You start talking to no one in particular.";
+  if (noun == player)
+    "You start talking to yourself, but it's a one-sided conversation.";
+  if (RunLife(noun, ##Talk))
+    rtrue;
+  print_ret (The)noun, " ", (IsOrAre)noun, " not very talkative.";
+];
+
+[ UnlockSub k;
+  if (ObjectIsUntouchable(noun))
+    rtrue;
+  if (noun hasnt lockable)
+  {
+    PrintMsg(MSG_UNLOCK_NOT_A_LOCK, 'unlock');
+    rtrue;
+  }
+  if (noun hasnt locked)
+  {
+    PrintMsg(MSG_UNLOCK_ALREADY_UNLOCKED, 'unlock');
+    rtrue;
+  }
+  k = RunRoutines(noun, with_key);
+  if (k == nothing)
+    "You can't see how to unlock ", (ItOrThem)noun, ".";
+  if (second == nothing && k ~= nothing && k in player)
+  {
+    second = k;
+    print "(with ", (the)second, ")^";
+  }
+  if (second == nothing)
+    "You don't have the key.";
+  if (second ~= k)
+  {
+    PrintMsg(MSG_UNLOCK_KEY_DOESNT_FIT);
+    rtrue;
+  }
+  give noun ~locked;
+  run_after_routines_msg = MSG_UNLOCK_DEFAULT;
+  run_after_routines_arg_1 = 'unlock';
+];
+
+[ UseSub;
+  if (ObjectIsUntouchable(noun))
+    rtrue;
+  "You'll have to be more explicit than that.";
+];
+
+End;

@@ -1,0 +1,153 @@
+Plague on the Discovery
+By Gianluca Girelli
+For Z-code interpreters
+
+Solution by Garry Francis
+----------------------------------------
+This is a minimal solution. You'll need to EXAMINE lots of things for this solution to make sense. Some optional (but significant) commands are shown in parentheses. These can be omitted once you know what to do.
+
+When the game starts, you are being pursued by security droids and there is a distinct smell of gas in the air. Your first task is to escape from the droids. You can find a flamethrower nearby, but any attempt to use it will cause the gas to ignite, so your second task is to get rid of the gas.
+
+When you vent the gas, you will die in the airless atmosphere if not wearing a helmet, so you need to find a helmet before venting the gas. This is just a taste of what's to come. Timing is crucial, so you may need to learn by dying a few times. The puzzles all have logical solutions, but they're very cruel and you can expect to die many times while trying to work out those solutions.
+
+Your ultimate goal is to work out what happened aboard the Discovery, find the data related to this and a vaccine. Finally, escape from the Discovery and return these to Earth without getting your own spaceship blown up during the process.
+
+(I) (you're wearing a pressure suit)
+(X SUIT) (in the turmoil, you didn't have the chance to take your helmet)
+U
+GET FLAMETHROWER
+(E) (the door is closed)
+TOUCH PANEL (the door opens)
+BREAK IT (the droids will now be unable able to open the door from this side)
+E
+TOUCH PANEL (the door closes, you're now safe from the droids)
+(X FLAMETHROWER) (it has a gauge)
+(X GAUGE) (flamethrower is full)
+N
+GET HELMET (something hidden in the helmet falls to the ground)
+WEAR IT
+(L) (it was a scrap of paper and a detonator)
+(GET ALL)
+(READ PAPER) ('Destroy this ship!')
+(X DETONATOR) (it has a button)
+(X BUTTON) (press it to activate the detonator)
+(PRESS IT) (nothing happens as detonator needs to be connected to explosive)
+S
+U
+(X VALVE) (it's used to vent the air in the spaceship, it's currently closed)
+(OPEN IT) (it can't be opened manually, try the lever)
+(X LEVER) (it's used to vent the air outside in case of emergency, it's closed)
+PULL LEVER (air is sucked out, helmet saved you but is damaged, gas is now gone)
+G (air is restored)
+(REMOVE HELMET)
+D
+E
+D
+(X EMERGENCY LIGHT)
+GET EMERGENCY LIGHT (it turns on automatically)
+U
+N
+BURN CORPSE WITH FLAMETHROWER
+(X GAUGE) (flamethrower is two-thirds full)
+(GET NOTE)
+(READ IT) (captain was plotting route to Sun with backup plan to blow up engine)
+S
+E
+(E) (you can't get past the corpse)
+BURN CORPSE WITH FLAMETHROWER
+(X GAUGE) (flamethrower is one-third full)
+E
+(X COCKPIT) (the disengage lever attracts your attention)
+(X LEVER)
+PULL LEVER (failing to do this, changes the end game)
+LOOK UNDER SEATS (you find a magnetic badge)
+GET BADGE
+(X IT) (Something's written on it)
+(READ IT) (it says, 'Armoury')
+W
+W
+W
+U
+E
+BURN CORPSE WITH FLAMETHROWER
+(X GAUGE) (flamethrower is empty)
+GET BOTTLE
+(X IT) (it has a label)
+(READ LABEL) (it says, 'Wear protective gear before using acid')
+GET GLOVES
+(X THEM) (they're safety gloves big enough to wear over your spacesuit)
+WEAR THEM
+W
+D
+D
+UNLOCK DOOR WITH BADGE
+OPEN IT
+S
+GET TANK
+(X IT) (it's full)
+LOAD FLAMETHROWER WITH TANK
+(X GAUGE) (flamethrower is now full again)
+(X TANK) (it's now empty)
+(DROP TANK)
+(X CONTAINER) (it has a big lock)
+(X LOCK) (how are you going to unlock it without a key?)
+POUR ACID ON LOCK (lock dissolves and container pops open)
+(X CONTAINER) (it contains some explosive)
+GET EXPLOSIVE (you now have all the components you need to make a bomb)
+MAKE BOMB
+N
+(N)
+(X ICE)
+(S)
+W
+BURN BODIES WITH FLAMETHROWER
+(X GAUGE) (flamethrower is two-thirds full)
+GET KEY
+(X IT) (there's something written on it)
+(READ IT) (it says 'Navigation Room')
+E
+E
+S
+BURN CORPSES WITH FLAMETHROWER
+(X GAUGE) (flamethrower is one-third full)
+(X WHITEBOARD) (there's writing on it)
+(READ IT) (crew had brought a pathogen aboard when exploring Guyoth system)
+(GET REPORT)
+(X IT) (it contains data about the pathogen)
+(READ IT) (this explains the symptoms exhibited on the dead bodies)
+N
+W
+U
+U
+N
+BURN CORPSE WITH FLAMETHROWER
+(X GAUGE) (flamethrower is empty)
+GET FLASH DRIVE
+(X IT) (it's a high-density storage device)
+(READ IT) (you need to plug it into a computer)
+S
+S
+(X CABINETS) (they're full of tubes and capsules)
+(X CABINET) (you can't see inside)
+OPEN CABINET (you reveal a vial)
+GET VIAL
+(X IT) (it's filled with blue liquid, but you have no idea what it is)
+N
+D
+UNLOCK NAVIGATION ROOM DOOR WITH KEY
+OPEN IT
+S
+(X COMPUTER) (it still works, there's a slot to insert a storage device)
+PUT FLASH DRIVE IN SLOT
+TRANSFER DATA TO FLASH DRIVE (you read some of it while it's being transferred)
+GET FLASH DRIVE
+N
+E
+D
+DROP BOMB
+PRESS BUTTON (on detonator) (the bomb will go off soon)
+U
+E
+D
+PRESS BUTTON (pod takes you to ship, Discovery explodes, you wait to be rescued)
+***THE END***

@@ -1,0 +1,266 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<trizbort version="1.5.9.3">
+	<info>
+		<title>Plague on the Discovery</title>
+		<author>Gianluca Girelli</author>
+	</info>
+	<map>
+		<room id="1" name="Upper Deck Corridor" subtitle="" x="-160" y="-320" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Upper deck corridor|Valve|Lever</objects>
+		</room>
+		<room id="3" name="Docking Bay" subtitle="" x="-280" y="0" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" isDark="yes" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Ladder|Airlock|Catwalk|Docking bay|Security droids|Gas|(Pressure suit)</objects>
+		</room>
+		<room id="4" name="Storeroom" subtitle="" x="-160" y="-160" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Storeroom|Containers|Shelf|Pressure helmet|(Detonator)|(Scrap of paper)</objects>
+		</room>
+		<room id="6" name="Central Deck Corridor" subtitle="" x="-160" y="-80" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Corridor|Docking bay door|Navigation room door|Electronic panel</objects>
+		</room>
+		<room id="7" name="Central Hub" subtitle="" x="-40" y="-80" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Central hub|Valve|Lever|Control unit</objects>
+		</room>
+		<room id="8" name="Cockpit" subtitle="" x="200" y="-80" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Cockpit|Seat|Instruments|Lever|(Magnetic badge)</objects>
+		</room>
+		<room id="9" name="Engine Room" subtitle="" x="-40" y="80" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Engine room|Engine|Slot|Emergency light|(Bomb)|(Dummy explosive)|(Dummy detonator)|(Dummy button on detonator)</objects>
+		</room>
+		<room id="11" name="Pilots' Quarters" subtitle="" x="-40" y="-160" w="80" h="40" region="Dark" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="#FF80FF" secondFillLocation="BottomRight" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Pilots' quarters|Man's body|Captain's note</objects>
+		</room>
+		<room id="14" name="Emergency Area" subtitle="" x="80" y="-80" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="#FF80FF" secondFillLocation="BottomRight" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Emergency area|Man's body</objects>
+		</room>
+		<line id="29" style="dashed">
+			<dock index="0" id="4" port="s" />
+			<dock index="1" id="6" port="n" />
+		</line>
+		<line id="30" style="dashed">
+			<dock index="0" id="6" port="e" />
+			<dock index="1" id="7" port="w" />
+		</line>
+		<room id="92" name="Plague on the Discovery (Gianluca Girelli)" subtitle="" x="-280" y="-440" w="560" h="40" region="NoRegion" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="None" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw" />
+		</room>
+		<room id="37" name="Storeroom" subtitle="" x="-160" y="-400" w="80" h="40" region="Dark" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="#FF80FF" secondFillLocation="BottomRight" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Storeroom|Man's body|Flash drive</objects>
+		</room>
+		<room id="38" name="Recreation Room" subtitle="" x="-280" y="-320" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Recreation room|Sofas|Gaming tables|Board game</objects>
+		</room>
+		<room id="39" name="Sick Bay" subtitle="" x="-40" y="-320" w="80" h="40" region="Dark" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="#FF80FF" secondFillLocation="BottomRight" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Sick bay|Man's body|Pair of protective gloves|Bottle of acid|Label|(Empty bottle)</objects>
+		</room>
+		<room id="40" name="Laboratory" subtitle="" x="-160" y="-240" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Laboratory|Cabinets|Test tubes and capsules|Glass cabinet|(Vial filled with blue liquid)</objects>
+		</room>
+		<room id="62" name="Catwalk" subtitle="" x="-280" y="-80" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Ladder|Catwalk|Docking bay|Security droids|Gas|Docking bay door|Electronic panel|Flamethrower|(Gauge)</objects>
+		</room>
+		<room id="65" name="Navigation Room" subtitle="" x="-160" y="0" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Navigation room|Navigation room door|Chart|Video screen|Computer|Slot|Data</objects>
+		</room>
+		<room id="66" name="Storeroom" subtitle="" x="-160" y="80" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Storeroom|Block of ice</objects>
+		</room>
+		<room id="67" name="Mess Hall" subtitle="" x="-280" y="160" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="#FF80FF" secondFillLocation="BottomRight" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Mess hall|Tables and chairs|Men's bodies|Electronic key</objects>
+		</room>
+		<room id="68" name="Lower Deck Corridor" subtitle="" x="-160" y="160" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Corridor|Armoury door|Placard|Valve|Lever</objects>
+		</room>
+		<room id="69" name="Officers' Lounge" subtitle="" x="-40" y="160" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Officers' lounge|Sofas|Coffee tables|Scratches|Broken human nail</objects>
+		</room>
+		<room id="71" name="Kitchen" subtitle="" x="-280" y="240" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Kitchen</objects>
+		</room>
+		<room id="73" name="Strategic Meeting Rm" subtitle="" x="-40" y="240" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="#FF80FF" secondFillLocation="BottomRight" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Strategic meeting room|Furniture|Whiteboard|Walls|Writing|Men's bodies|Report</objects>
+		</room>
+		<room id="74" name="Escape Pod" subtitle="" x="80" y="80" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Escape pod|Control panel|Release button</objects>
+		</room>
+		<line id="96">
+			<dock index="0" id="38" port="e" />
+			<dock index="1" id="1" port="w" />
+		</line>
+		<line id="97">
+			<dock index="0" id="1" port="e" />
+			<dock index="1" id="39" port="w" />
+		</line>
+		<line id="108" style="dashed">
+			<dock index="0" id="62" port="e" />
+			<dock index="1" id="6" port="w" />
+		</line>
+		<line id="118">
+			<dock index="0" id="67" port="e" />
+			<dock index="1" id="68" port="w" />
+		</line>
+		<line id="119">
+			<dock index="0" id="68" port="e" />
+			<dock index="1" id="69" port="w" />
+		</line>
+		<line id="132" style="dashed">
+			<dock index="0" id="67" port="s" />
+			<dock index="1" id="71" port="n" />
+		</line>
+		<line id="133" style="dashed">
+			<dock index="0" id="6" port="s" />
+			<dock index="1" id="65" port="n" />
+		</line>
+		<line id="138">
+			<dock index="0" id="69" port="s" />
+			<dock index="1" id="73" port="n" />
+		</line>
+		<line id="141" style="dashed" startText="D" endText="U">
+			<dock index="0" id="14" port="s" />
+			<dock index="1" id="74" port="n" />
+		</line>
+		<room id="231" name="Copyright © Garry Francis 2026" subtitle="" x="100" y="240" w="180" h="40" region="NoRegion" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="None" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw" />
+		</room>
+		<room id="232" name="Legend" subtitle="" x="100" y="-400" w="180" h="40" region="NoRegion" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="None" description="" roomFill="#FFFFFF" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw" />
+		</room>
+		<room id="240" name="Start Room" subtitle="" x="100" y="-360" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" isDark="yes" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw" />
+		</room>
+		<room id="241" name="Normal Room" subtitle="" x="100" y="-300" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw" />
+		</room>
+		<line id="2">
+			<dock index="0" id="37" port="s" />
+			<dock index="1" id="1" port="n" />
+		</line>
+		<line id="5">
+			<dock index="0" id="1" port="s" />
+			<dock index="1" id="40" port="n" />
+		</line>
+		<line id="10" style="dashed" startText="D" endText="U">
+			<dock index="0" id="1" port="sw" />
+			<dock index="1" id="6" port="nw" />
+		</line>
+		<line id="12" style="dashed" startText="D" endText="U">
+			<dock index="0" id="6" port="se" />
+			<dock index="1" id="68" port="ne" />
+		</line>
+		<line id="13">
+			<dock index="0" id="66" port="s" />
+			<dock index="1" id="68" port="n" />
+		</line>
+		<line id="15" flow="oneWay" startText="U">
+			<dock index="0" id="3" port="n" />
+			<dock index="1" id="62" port="s" />
+		</line>
+		<room id="16" name="Crew's Quarters" subtitle="" x="-40" y="0" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Crew's quarters|Heap of clothes|Personal belongings|Books|Wall lockers|Posters</objects>
+		</room>
+		<line id="17">
+			<dock index="0" id="16" port="n" />
+			<dock index="1" id="7" port="s" />
+		</line>
+		<line id="18">
+			<dock index="0" id="7" port="n" />
+			<dock index="1" id="11" port="s" />
+		</line>
+		<line id="19" startText="D" endText="U" />
+		<line id="20" startText="D" endText="U" />
+		<line id="21" style="dashed" startText="D" endText="U">
+			<dock index="0" id="7" port="se" />
+			<dock index="1" id="9" port="ne" />
+		</line>
+		<line id="22">
+			<dock index="0" id="7" port="e" />
+			<dock index="1" id="14" port="w" />
+		</line>
+		<line id="23" style="dashed">
+			<dock index="0" id="14" port="e" />
+			<dock index="1" id="8" port="w" />
+		</line>
+		<room id="24" name="Armoury" subtitle="" x="-160" y="240" w="80" h="40" region="Normal" handDrawn="no" allcornersequal="no" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw">Armoury|Armoury door|Shelves|Laser pistol|Shockproof container|Big lock|Fuel tank|(Explosive)</objects>
+		</room>
+		<line id="25" style="dashed">
+			<dock index="0" id="68" port="s" />
+			<dock index="1" id="24" port="n" />
+		</line>
+		<room id="26" name="Room with Corpse(s)" subtitle="" x="200" y="-360" w="80" h="40" region="Corpses" handDrawn="no" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw" />
+		</room>
+		<room id="27" name="Dark Room" subtitle="" x="200" y="-300" w="80" h="40" region="Dark" handDrawn="no" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="1" cornerTopRight="1" cornerBottomLeft="1" cornerBottomRight="1" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw" />
+		</room>
+		<room id="28" name="Upper Deck" subtitle="" x="-280" y="-400" w="80" h="40" region="NoRegion" handDrawn="no" allcornersequal="yes" ellipse="no" roundedCorners="yes" octagonal="no" cornerTopLeft="20" cornerTopRight="20" cornerBottomLeft="20" cornerBottomRight="20" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw" />
+		</room>
+		<room id="31" name="Middle Deck" subtitle="" x="-280" y="-160" w="80" h="40" region="NoRegion" handDrawn="no" allcornersequal="yes" ellipse="no" roundedCorners="yes" octagonal="no" cornerTopLeft="20" cornerTopRight="20" cornerBottomLeft="20" cornerBottomRight="20" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw" />
+		</room>
+		<room id="32" name="Lower Deck" subtitle="" x="-280" y="80" w="80" h="40" region="NoRegion" handDrawn="no" allcornersequal="yes" ellipse="no" roundedCorners="yes" octagonal="no" cornerTopLeft="20" cornerTopRight="20" cornerBottomLeft="20" cornerBottomRight="20" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSmallText="">
+			<objects at="wsw" />
+		</room>
+		<line id="33">
+			<point index="0" x="-280" y="-180" />
+			<point index="1" x="280" y="-180" />
+		</line>
+		<line id="34">
+			<point index="0" x="-280" y="60" />
+			<point index="1" x="280" y="60" />
+		</line>
+	</map>
+	<settings>
+		<colors>
+			<canvas>White</canvas>
+			<fill>White</fill>
+			<border>Black</border>
+			<line>Black</line>
+			<selectedLine>Gold</selectedLine>
+			<hoverLine>DarkOrange</hoverLine>
+			<largeText>MidnightBlue</largeText>
+			<smallText>Black</smallText>
+			<lineText>Black</lineText>
+			<grid>#F5F5F5</grid>
+		</colors>
+		<regions>
+			<Corpses Name="Corpses" TextColor="Black">#FF80FF</Corpses>
+			<Dark Name="Dark" TextColor="Black">Silver</Dark>
+			<Dead Name="Dead" TextColor="White">Red</Dead>
+			<NoRegion Name="NoRegion" TextColor="Black">White</NoRegion>
+			<Normal Name="Normal" TextColor="Black">#FFFF80</Normal>
+		</regions>
+		<fonts>
+			<room size="12">Arial</room>
+			<object size="12">Arial Narrow</object>
+			<line size="12">Arial Narrow</line>
+		</fonts>
+		<grid>
+			<snapTo>yes</snapTo>
+			<visible>yes</visible>
+			<showOrigin>yes</showOrigin>
+			<size>20</size>
+		</grid>
+		<lines>
+			<width>1</width>
+			<handDrawn>no</handDrawn>
+			<arrowSize>8</arrowSize>
+			<textOffset>4</textOffset>
+		</lines>
+		<rooms>
+			<darknessStripeSize>10</darknessStripeSize>
+			<objectListOffset>4</objectListOffset>
+			<connectionStalkLength>20</connectionStalkLength>
+			<preferredDistanceBetweenRooms>40</preferredDistanceBetweenRooms>
+			<defaultRoomName>Cave</defaultRoomName>
+		</rooms>
+		<ui>
+			<handleSize>8</handleSize>
+			<snapToElementSize>8</snapToElementSize>
+		</ui>
+		<keypadNavigation>
+			<creationModifier>control</creationModifier>
+			<unexploredModifier>alt</unexploredModifier>
+		</keypadNavigation>
+	</settings>
+</trizbort>
